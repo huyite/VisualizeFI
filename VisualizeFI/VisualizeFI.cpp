@@ -99,7 +99,7 @@ void swapitem(string &it1,string &it2){
 void sortitem(vector<string>& itemset){
 	 for(int i=0;i<itemset.size()-1;i++)
 		  for(int j=i;j<itemset.size()-1;j++)
-			  if(strcmp(itemset[i].c_str(),itemset[j].c_str())>0)
+			  if(getDoubleVal(itemset[i])>getDoubleVal(itemset[j]))
 				  swap(itemset[i],itemset[j]);
 }
 void VisualizeFI::readFile(const string &file){
@@ -138,7 +138,7 @@ void VisualizeFI::readFile(const string &file){
       {
     	        curNode=nodeNull;   //cursor node
     	     	 double fr=getDoubleVal(buf[size-1]);
-    	     	sortitem(buf);
+    	     	  sortitem(buf);
     	          for(int i=0;i<size-1;i++)
     	          {
     	        	 pointerSon=isNodeSon(buf[i],curNode);
