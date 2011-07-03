@@ -2,7 +2,7 @@
  * VisualizeFI.cpp
  *
  *  Created on: 22 Jun 2011
- *      Author: huy
+ *      Author: huy Van Nguyen
  */
 
 #include "VisualizeFI.h"
