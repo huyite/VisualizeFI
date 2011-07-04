@@ -134,9 +134,8 @@ void VisualizeFI::readFile(const string &file){
       if(this->model==1)
 	this->FI.buildItemsetM1(buf);
       else
-	//this->FI.buildItemsetM2(buf);
       {
-    	        curNode=nodeNull;   //cursor node
+    	         curNode=nodeNull;   //cursor node
     	     	 double fr=getDoubleVal(buf[size-1]);
     	     	  sortitem(buf);
     	          for(int i=0;i<size-1;i++)
@@ -182,9 +181,11 @@ bool VisualizeFI::import(const std::string &){
   else
     this->model = 2;
   this->readFile(filename);
-  //this->FI.sortItemsets();
-  //this->buildNodes();
-  //this->buildEdges();
+  if(this->model==1){
+  this->FI.sortItemsets();
+  this->buildNodes();
+  this->buildEdges();
+  }
   return true;
 }
 
@@ -209,12 +210,7 @@ void VisualizeFI::buildNodes(){
 }
 bool VisualizeFI::isEdge(int j, int i)
 {
-  if(this->model==2)
-    return this->FI.getItemSet(j)->checkSubSet(*(this->FI.getItemSet(i)))&
-      (this->FI.getItemSet(j)->numberOfItem()-this->FI.getItemSet(i)->numberOfItem()==1)&
-      (strcmp(FI.getItemSet(j)->getName().c_str(),FI.getItemSet(i)->getName().c_str())>0);
-  else
-    return this->FI.getItemSet(j)->checkSubSet(*(this->FI.getItemSet(i)))&
+   return this->FI.getItemSet(j)->checkSubSet(*(this->FI.getItemSet(i)))&
       (this->FI.getItemSet(j)->numberOfItem()-this->FI.getItemSet(i)->numberOfItem()==1);
 }
 
