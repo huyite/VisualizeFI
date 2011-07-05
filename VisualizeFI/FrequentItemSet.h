@@ -16,7 +16,6 @@ public:
 	FrequentItemSet();
 	virtual ~FrequentItemSet();
 	void buildItemsetM1(const vector<string>&);
-	void buildItemsetM2(vector<string>&);
 	bool isExitItemSet(ItemSet&);
 	void addItemset(ItemSet);
 	void sortItemsets();

@@ -79,23 +79,7 @@ void sortItem(vector<string>&arrItem){
 				arrItem[j]=temp;
 			}
 }
-/////////////////////////////////////////////////////
-void FrequentItemSet::buildItemsetM2(vector<string>&arrItem){
-      sortItem(arrItem);
-      int size=arrItem.size()-1;
-      double frItemSet=GetDoubleVal(arrItem[size]);
-      for(int i=0;i<size;i++){
-    	  ItemSet itemset;
-    	  for(int j=0;j<=i;j++){
-    		 Item item(arrItem[j]);
-    		  itemset.addItem(item);
-    	  }
-    	  itemset.IncrFrequency(frItemSet);
-          if(!this->isExitItemSet(itemset))
-        	  this->addItemset(itemset);
-      }
 
-}
 
 void swap(ItemSet &it1,ItemSet &it2){
 	ItemSet temp;
