@@ -6,6 +6,7 @@
  */
 
 #include "ViewItemSet.h"
+#include "itemsetviewdialog.h"
 using namespace std;
 using namespace tlp;
 
@@ -22,6 +23,7 @@ ViewItemSet::~ViewItemSet() {
 }
 QWidget *ViewItemSet::construct(QWidget* parent){
 	QWidget *widget=GlMainView::construct(parent);
+	itemsetviewdialog=new ItemSetViewDialog();
 	return widget;
 }
 void ViewItemSet::setData(Graph *graph,DataSet dataset){
@@ -36,23 +38,24 @@ void ViewItemSet::setData(Graph *graph,DataSet dataset){
 
 }
 void ViewItemSet::getData(Graph **graph, DataSet *dataSet){
-	dataSet->set<string>("myString","toto");
+	dataSet->set<DataSet>("glMainWidgetData",mainWidget->getData());
 	dataSet->set<string>("owndata","an example of own data");
 	*graph=getGlMainWidget()->getGraph();
 
 }
 std::list<std::pair<QWidget *,std::string> > ViewItemSet::getConfigurationWidget() {
   std::list<std::pair<QWidget *,std::string> > widgetList;
+  widgetList.push_back(std::pair<QWidget*,std::string>(itemsetviewdialog,"View ItemSet"));
   return widgetList;
 }
 void ViewItemSet::draw(){
    GlMainView::draw();
 }
 void ViewItemSet::refresh(){
-
+	GlMainView::refresh();
 }
 void ViewItemSet::init(){
-
+	GlMainView::refresh();
 }
 void ViewItemSet::setGraph(Graph *graph){
 	mainWidget->setGraph(graph);

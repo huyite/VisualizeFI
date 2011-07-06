@@ -18,15 +18,18 @@ SET(LIB_SRCS
  ItemSet.cpp
  VisualizeFI.cpp
  ViewItemSet.cpp
+ itemsetviewdialog.cpp
  )
 
 # Declare designer files (as .ui files)
 SET(LIB_UI
+ItemSetViewDialog.ui
 )
 
 # Declare QObject headers (as .h files)
 SET(LIB_MOC
 ViewItemSet.h
+itemsetviewdialog.h
 )
 
 # Declare resources files (as .qrc files)

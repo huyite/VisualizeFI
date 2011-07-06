@@ -39,10 +39,10 @@ RM = /usr/bin/cmake -E remove -f
 CMAKE_EDIT_COMMAND = /usr/bin/cmake-gui
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/huy/git/VisualizeFI/VisualizeFI
+CMAKE_SOURCE_DIR = /root/git/VisualizeFI/VisualizeFI
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/huy/git/VisualizeFI/VisualizeFI/build
+CMAKE_BINARY_DIR = /root/git/VisualizeFI/VisualizeFI/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -110,9 +110,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/huy/git/VisualizeFI/VisualizeFI/build/CMakeFiles /home/huy/git/VisualizeFI/VisualizeFI/build/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/git/VisualizeFI/VisualizeFI/build/CMakeFiles /root/git/VisualizeFI/VisualizeFI/build/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/huy/git/VisualizeFI/VisualizeFI/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /root/git/VisualizeFI/VisualizeFI/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -272,6 +272,30 @@ VisualizeFI.cpp.s:
 	$(MAKE) -f CMakeFiles/visualizefi-3.5.1.dir/build.make CMakeFiles/visualizefi-3.5.1.dir/VisualizeFI.cpp.s
 .PHONY : VisualizeFI.cpp.s
 
+itemsetviewdialog.o: itemsetviewdialog.cpp.o
+.PHONY : itemsetviewdialog.o
+
+# target to build an object file
+itemsetviewdialog.cpp.o:
+	$(MAKE) -f CMakeFiles/visualizefi-3.5.1.dir/build.make CMakeFiles/visualizefi-3.5.1.dir/itemsetviewdialog.cpp.o
+.PHONY : itemsetviewdialog.cpp.o
+
+itemsetviewdialog.i: itemsetviewdialog.cpp.i
+.PHONY : itemsetviewdialog.i
+
+# target to preprocess a source file
+itemsetviewdialog.cpp.i:
+	$(MAKE) -f CMakeFiles/visualizefi-3.5.1.dir/build.make CMakeFiles/visualizefi-3.5.1.dir/itemsetviewdialog.cpp.i
+.PHONY : itemsetviewdialog.cpp.i
+
+itemsetviewdialog.s: itemsetviewdialog.cpp.s
+.PHONY : itemsetviewdialog.s
+
+# target to generate assembly for a file
+itemsetviewdialog.cpp.s:
+	$(MAKE) -f CMakeFiles/visualizefi-3.5.1.dir/build.make CMakeFiles/visualizefi-3.5.1.dir/itemsetviewdialog.cpp.s
+.PHONY : itemsetviewdialog.cpp.s
+
 moc_ViewItemSet.o: moc_ViewItemSet.cpp.o
 .PHONY : moc_ViewItemSet.o
 
@@ -295,6 +319,30 @@ moc_ViewItemSet.s: moc_ViewItemSet.cpp.s
 moc_ViewItemSet.cpp.s:
 	$(MAKE) -f CMakeFiles/visualizefi-3.5.1.dir/build.make CMakeFiles/visualizefi-3.5.1.dir/moc_ViewItemSet.cpp.s
 .PHONY : moc_ViewItemSet.cpp.s
+
+moc_itemsetviewdialog.o: moc_itemsetviewdialog.cpp.o
+.PHONY : moc_itemsetviewdialog.o
+
+# target to build an object file
+moc_itemsetviewdialog.cpp.o:
+	$(MAKE) -f CMakeFiles/visualizefi-3.5.1.dir/build.make CMakeFiles/visualizefi-3.5.1.dir/moc_itemsetviewdialog.cpp.o
+.PHONY : moc_itemsetviewdialog.cpp.o
+
+moc_itemsetviewdialog.i: moc_itemsetviewdialog.cpp.i
+.PHONY : moc_itemsetviewdialog.i
+
+# target to preprocess a source file
+moc_itemsetviewdialog.cpp.i:
+	$(MAKE) -f CMakeFiles/visualizefi-3.5.1.dir/build.make CMakeFiles/visualizefi-3.5.1.dir/moc_itemsetviewdialog.cpp.i
+.PHONY : moc_itemsetviewdialog.cpp.i
+
+moc_itemsetviewdialog.s: moc_itemsetviewdialog.cpp.s
+.PHONY : moc_itemsetviewdialog.s
+
+# target to generate assembly for a file
+moc_itemsetviewdialog.cpp.s:
+	$(MAKE) -f CMakeFiles/visualizefi-3.5.1.dir/build.make CMakeFiles/visualizefi-3.5.1.dir/moc_itemsetviewdialog.cpp.s
+.PHONY : moc_itemsetviewdialog.cpp.s
 
 # Help Target
 help:
@@ -324,9 +372,15 @@ help:
 	@echo "... VisualizeFI.o"
 	@echo "... VisualizeFI.i"
 	@echo "... VisualizeFI.s"
+	@echo "... itemsetviewdialog.o"
+	@echo "... itemsetviewdialog.i"
+	@echo "... itemsetviewdialog.s"
 	@echo "... moc_ViewItemSet.o"
 	@echo "... moc_ViewItemSet.i"
 	@echo "... moc_ViewItemSet.s"
+	@echo "... moc_itemsetviewdialog.o"
+	@echo "... moc_itemsetviewdialog.i"
+	@echo "... moc_itemsetviewdialog.s"
 .PHONY : help
 
 

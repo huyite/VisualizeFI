@@ -8,14 +8,15 @@
 #ifndef VIEWITEMSET_H_
 #define VIEWITEMSET_H_
 
-
+#include "itemsetviewdialog.h"
 #include <tulip/GlMainView.h>
 using namespace tlp;
 
 class ViewItemSet : public GlMainView{
 
 Q_OBJECT;
-
+protected:
+     ItemSetViewDialog *itemsetviewdialog;
 public:
 	ViewItemSet();
 	virtual ~ViewItemSet();
