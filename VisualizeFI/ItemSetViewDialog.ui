@@ -46,7 +46,7 @@
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
    <receiver>Dialog</receiver>
-   <slot>accept()</slot>
+   <slot>update()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>248</x>
@@ -62,7 +62,7 @@
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
    <receiver>Dialog</receiver>
-   <slot>reject()</slot>
+   <slot>update()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>316</x>

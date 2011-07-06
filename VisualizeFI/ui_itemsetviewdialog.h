@@ -42,8 +42,8 @@ public:
         lineEdit->setGeometry(QRect(90, 110, 191, 27));
 
         retranslateUi(Dialog);
-        QObject::connect(buttonBox, SIGNAL(accepted()), Dialog, SLOT(accept()));
-        QObject::connect(buttonBox, SIGNAL(rejected()), Dialog, SLOT(reject()));
+        QObject::connect(buttonBox, SIGNAL(accepted()), Dialog, SLOT(update()));
+        QObject::connect(buttonBox, SIGNAL(rejected()), Dialog, SLOT(update()));
 
         QMetaObject::connectSlotsByName(Dialog);
     } // setupUi

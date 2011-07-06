@@ -18,6 +18,7 @@ protected:
 
 private:
     Ui::ItemSetViewDialog *ui;
+
 };
 
 #endif // ITEMSETVIEWDIALOG_H
