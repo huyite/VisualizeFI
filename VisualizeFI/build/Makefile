@@ -224,6 +224,30 @@ ItemSet.cpp.s:
 	$(MAKE) -f CMakeFiles/visualizefi-3.5.1.dir/build.make CMakeFiles/visualizefi-3.5.1.dir/ItemSet.cpp.s
 .PHONY : ItemSet.cpp.s
 
+ViewItemSet.o: ViewItemSet.cpp.o
+.PHONY : ViewItemSet.o
+
+# target to build an object file
+ViewItemSet.cpp.o:
+	$(MAKE) -f CMakeFiles/visualizefi-3.5.1.dir/build.make CMakeFiles/visualizefi-3.5.1.dir/ViewItemSet.cpp.o
+.PHONY : ViewItemSet.cpp.o
+
+ViewItemSet.i: ViewItemSet.cpp.i
+.PHONY : ViewItemSet.i
+
+# target to preprocess a source file
+ViewItemSet.cpp.i:
+	$(MAKE) -f CMakeFiles/visualizefi-3.5.1.dir/build.make CMakeFiles/visualizefi-3.5.1.dir/ViewItemSet.cpp.i
+.PHONY : ViewItemSet.cpp.i
+
+ViewItemSet.s: ViewItemSet.cpp.s
+.PHONY : ViewItemSet.s
+
+# target to generate assembly for a file
+ViewItemSet.cpp.s:
+	$(MAKE) -f CMakeFiles/visualizefi-3.5.1.dir/build.make CMakeFiles/visualizefi-3.5.1.dir/ViewItemSet.cpp.s
+.PHONY : ViewItemSet.cpp.s
+
 VisualizeFI.o: VisualizeFI.cpp.o
 .PHONY : VisualizeFI.o
 
@@ -248,6 +272,30 @@ VisualizeFI.cpp.s:
 	$(MAKE) -f CMakeFiles/visualizefi-3.5.1.dir/build.make CMakeFiles/visualizefi-3.5.1.dir/VisualizeFI.cpp.s
 .PHONY : VisualizeFI.cpp.s
 
+moc_ViewItemSet.o: moc_ViewItemSet.cpp.o
+.PHONY : moc_ViewItemSet.o
+
+# target to build an object file
+moc_ViewItemSet.cpp.o:
+	$(MAKE) -f CMakeFiles/visualizefi-3.5.1.dir/build.make CMakeFiles/visualizefi-3.5.1.dir/moc_ViewItemSet.cpp.o
+.PHONY : moc_ViewItemSet.cpp.o
+
+moc_ViewItemSet.i: moc_ViewItemSet.cpp.i
+.PHONY : moc_ViewItemSet.i
+
+# target to preprocess a source file
+moc_ViewItemSet.cpp.i:
+	$(MAKE) -f CMakeFiles/visualizefi-3.5.1.dir/build.make CMakeFiles/visualizefi-3.5.1.dir/moc_ViewItemSet.cpp.i
+.PHONY : moc_ViewItemSet.cpp.i
+
+moc_ViewItemSet.s: moc_ViewItemSet.cpp.s
+.PHONY : moc_ViewItemSet.s
+
+# target to generate assembly for a file
+moc_ViewItemSet.cpp.s:
+	$(MAKE) -f CMakeFiles/visualizefi-3.5.1.dir/build.make CMakeFiles/visualizefi-3.5.1.dir/moc_ViewItemSet.cpp.s
+.PHONY : moc_ViewItemSet.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -270,9 +318,15 @@ help:
 	@echo "... ItemSet.o"
 	@echo "... ItemSet.i"
 	@echo "... ItemSet.s"
+	@echo "... ViewItemSet.o"
+	@echo "... ViewItemSet.i"
+	@echo "... ViewItemSet.s"
 	@echo "... VisualizeFI.o"
 	@echo "... VisualizeFI.i"
 	@echo "... VisualizeFI.s"
+	@echo "... moc_ViewItemSet.o"
+	@echo "... moc_ViewItemSet.i"
+	@echo "... moc_ViewItemSet.s"
 .PHONY : help
 
 
