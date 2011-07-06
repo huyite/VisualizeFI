@@ -18,7 +18,7 @@ SET(LIB_SRCS
  ItemSet.cpp
  VisualizeFI.cpp
  ViewItemSet.cpp
-)
+ )
 
 # Declare designer files (as .ui files)
 SET(LIB_UI

@@ -9,6 +9,7 @@
 using namespace std;
 using namespace tlp;
 
+#include <tulip/GlMainWidget.h>
 VIEWPLUGIN(ViewItemSet, "ItemSet view", "Huy Nguyen Van", "06/07/2011", "ItemSet view", "1.0");
 
 ViewItemSet::ViewItemSet():GlMainView() {
@@ -31,13 +32,13 @@ void ViewItemSet::setData(Graph *graph,DataSet dataset){
 	data.get("data",data);
 	if(data.exist("owndata"))
 	data.get("owndata",stringData);
-	mainWidget->setData(graph,data);
+	getGlMainWidget()->setData(graph,data);
 
 }
-void ViewItemSet::getData(Graph **graph,DataSet *dataSet){
-	dataSet->set<DataSet>("glMainWidgetData",mainWidget->getData());
+void ViewItemSet::getData(Graph **graph, DataSet *dataSet){
+	dataSet->set<string>("myString","toto");
 	dataSet->set<string>("owndata","an example of own data");
-	*graph=mainWidget->getGraph();
+	*graph=getGlMainWidget()->getGraph();
 
 }
 std::list<std::pair<QWidget *,std::string> > ViewItemSet::getConfigurationWidget() {
