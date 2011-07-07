@@ -28,18 +28,14 @@ QWidget *ViewItemSet::construct(QWidget* parent){
 }
 void ViewItemSet::setData(Graph *graph,DataSet dataset){
 	DataSet data;
-	string stringData;
 	//We check if glMainWidgetData exist because getData can be call with empty data s
 	if(data.exist("data"))
 	data.get("data",data);
-	if(data.exist("owndata"))
-	data.get("owndata",stringData);
 	getGlMainWidget()->setData(graph,data);
 
 }
 void ViewItemSet::getData(Graph **graph, DataSet *dataSet){
 	dataSet->set<DataSet>("glMainWidgetData",mainWidget->getData());
-	dataSet->set<string>("owndata","an example of own data");
 	*graph=getGlMainWidget()->getGraph();
 
 }
