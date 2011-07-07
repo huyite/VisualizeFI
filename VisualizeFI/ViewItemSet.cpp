@@ -26,11 +26,10 @@ QWidget *ViewItemSet::construct(QWidget* parent){
 	itemsetviewdialog=new ItemSetViewDialog();
 	return widget;
 }
-void ViewItemSet::setData(Graph *graph,DataSet dataset){
+void ViewItemSet::setData(Graph *graph,DataSet dataSet){
 	DataSet data;
-	//We check if glMainWidgetData exist because getData can be call with empty data s
-	if(data.exist("data"))
-	data.get("data",data);
+	if(dataSet.exist("glMainWidgetData"))
+	dataSet.get("glMainWidgetData",data);
 	getGlMainWidget()->setData(graph,data);
 
 }
