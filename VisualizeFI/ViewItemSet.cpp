@@ -24,7 +24,7 @@ ViewItemSet::~ViewItemSet() {
 QWidget *ViewItemSet::construct(QWidget* parent){
 	QWidget *widget=GlMainView::construct(parent);
 	itemsetviewdialog=new ItemSetViewDialog();
-	QObject::connect(itemsetviewdialog,SIGNAL(itemsetChange()),this,SLOT(findItemSet()));
+	QObject::connect(itemsetviewdialog,SIGNAL(itemsetChange(const QString&)),this,SLOT(findItemSet(const QString&)));
 	return widget;
 }
 void ViewItemSet::setData(Graph *graph,DataSet dataSet){
@@ -57,14 +57,16 @@ void ViewItemSet::setGraph(Graph *graph){
 	mainWidget->setGraph(graph);
 	this->draw();
 }
-void ViewItemSet::findItemSet(){
+void ViewItemSet::findItemSet(const QString &i){
 	Graph *graph=getGlMainWidget()->getGraph();
 	Iterator<node> *itNodes = graph->getNodes();
 	BooleanProperty *select = graph->getLocalProperty<BooleanProperty>("viewSelection");
+	StringProperty *name = graph->getLocalProperty<StringProperty>("viewLabel");
+
 	while(itNodes->hasNext()) {
 	node n = itNodes->next();
 	select->setNodeValue(n,true);
-	}
-
+	name->setNodeValue(n,i.toStdString());
+	}delete itNodes;
 	this->draw();
 }

@@ -14,7 +14,7 @@ using namespace tlp;
 
 class ViewItemSet : public GlMainView{
 
-Q_OBJECT;
+Q_OBJECT
 protected:
      ItemSetViewDialog *itemsetviewdialog;
 public:
@@ -29,7 +29,7 @@ public slots:
     virtual void refresh();
     virtual void init();
     void setGraph(Graph *graph);
-    void findItemSet();
+    void findItemSet(const QString& i);
 };
 
 #endif /* VIEWITEMSET_H_ */

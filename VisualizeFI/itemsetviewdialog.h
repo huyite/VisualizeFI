@@ -19,7 +19,7 @@ protected:
 private:
     Ui::ItemSetViewDialog *ui;
 signals:
-    void itemsetChange();
+    void itemsetChange(const QString &);
 public slots:
    void viewitemset();
    // void updateLabel(const QString& its);

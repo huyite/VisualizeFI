@@ -29,8 +29,9 @@ void ItemSetViewDialog::changeEvent(QEvent *e)
     }
 }
 void ItemSetViewDialog::viewitemset(){
-    //QString itemset=ui->lineEdit->text();
-    emit itemsetChange();
+    QString itemset=ui->lineEdit->text();
+    //emit itemsetChange(itemset.toStdString());
+    emit itemsetChange(itemset);
 }
 /*void ItemSetViewDialog::updateLabel(const QString& its){
 	ui->label->setText(its);
