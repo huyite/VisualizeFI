@@ -29,6 +29,7 @@ public slots:
     virtual void refresh();
     virtual void init();
     void setGraph(Graph *graph);
+    void findItemSet();
 };
 
 #endif /* VIEWITEMSET_H_ */

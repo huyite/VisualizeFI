@@ -24,22 +24,18 @@ ViewItemSet::~ViewItemSet() {
 QWidget *ViewItemSet::construct(QWidget* parent){
 	QWidget *widget=GlMainView::construct(parent);
 	itemsetviewdialog=new ItemSetViewDialog();
+	QObject::connect(itemsetviewdialog,SIGNAL(itemsetChange()),this,SLOT(findItemSet()));
 	return widget;
 }
-void ViewItemSet::setData(Graph *graph,DataSet dataset){
+void ViewItemSet::setData(Graph *graph,DataSet dataSet){
 	DataSet data;
-	string stringData;
-	//We check if glMainWidgetData exist because getData can be call with empty data s
-	if(data.exist("data"))
-	data.get("data",data);
-	if(data.exist("owndata"))
-	data.get("owndata",stringData);
+	if(dataSet.exist("glMainWidgetData"))
+	dataSet.get("glMainWidgetData",data);
 	getGlMainWidget()->setData(graph,data);
 
 }
 void ViewItemSet::getData(Graph **graph, DataSet *dataSet){
 	dataSet->set<DataSet>("glMainWidgetData",mainWidget->getData());
-	dataSet->set<string>("owndata","an example of own data");
 	*graph=getGlMainWidget()->getGraph();
 
 }
@@ -59,5 +55,16 @@ void ViewItemSet::init(){
 }
 void ViewItemSet::setGraph(Graph *graph){
 	mainWidget->setGraph(graph);
+	this->draw();
+}
+void ViewItemSet::findItemSet(){
+	Graph *graph=getGlMainWidget()->getGraph();
+	Iterator<node> *itNodes = graph->getNodes();
+	BooleanProperty *select = graph->getLocalProperty<BooleanProperty>("viewSelection");
+	while(itNodes->hasNext()) {
+	node n = itNodes->next();
+	select->setNodeValue(n,true);
+	}
+
 	this->draw();
 }

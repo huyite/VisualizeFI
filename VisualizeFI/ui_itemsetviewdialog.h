@@ -15,35 +15,38 @@
 #include <QtGui/QApplication>
 #include <QtGui/QButtonGroup>
 #include <QtGui/QDialog>
-#include <QtGui/QDialogButtonBox>
 #include <QtGui/QHeaderView>
+#include <QtGui/QLabel>
 #include <QtGui/QLineEdit>
+#include <QtGui/QPushButton>
 
 QT_BEGIN_NAMESPACE
 
 class Ui_ItemSetViewDialog
 {
 public:
-    QDialogButtonBox *buttonBox;
     QLineEdit *lineEdit;
+    QLabel *label;
+    QPushButton *pushButton;
 
     void setupUi(QDialog *Dialog)
     {
         if (Dialog->objectName().isEmpty())
             Dialog->setObjectName(QString::fromUtf8("Dialog"));
         Dialog->resize(400, 300);
-        buttonBox = new QDialogButtonBox(Dialog);
-        buttonBox->setObjectName(QString::fromUtf8("buttonBox"));
-        buttonBox->setGeometry(QRect(90, 170, 181, 32));
-        buttonBox->setOrientation(Qt::Horizontal);
-        buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
         lineEdit = new QLineEdit(Dialog);
         lineEdit->setObjectName(QString::fromUtf8("lineEdit"));
         lineEdit->setGeometry(QRect(90, 110, 191, 27));
+        label = new QLabel(Dialog);
+        label->setObjectName(QString::fromUtf8("label"));
+        label->setGeometry(QRect(140, 230, 91, 41));
+        pushButton = new QPushButton(Dialog);
+        pushButton->setObjectName(QString::fromUtf8("pushButton"));
+        pushButton->setGeometry(QRect(140, 170, 93, 27));
 
         retranslateUi(Dialog);
-        QObject::connect(buttonBox, SIGNAL(accepted()), Dialog, SLOT(update()));
-        QObject::connect(buttonBox, SIGNAL(rejected()), Dialog, SLOT(update()));
+        QObject::connect(pushButton, SIGNAL(clicked()), lineEdit, SLOT(copy()));
+        QObject::connect(pushButton, SIGNAL(clicked()), label, SLOT(update()));
 
         QMetaObject::connectSlotsByName(Dialog);
     } // setupUi
@@ -51,9 +54,12 @@ public:
     void retranslateUi(QDialog *Dialog)
     {
         Dialog->setWindowTitle(QApplication::translate("Dialog", "Dialog", 0, QApplication::UnicodeUTF8));
+        label->setText(QApplication::translate("Dialog", "rtrtretertertretret", 0, QApplication::UnicodeUTF8));
+        pushButton->setText(QApplication::translate("Dialog", "PushButton", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };
+
 
 namespace Ui {
     class ItemSetViewDialog: public Ui_ItemSetViewDialog {};
