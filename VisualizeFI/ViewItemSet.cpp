@@ -54,8 +54,8 @@ void ViewItemSet::init(){
 	GlMainView::refresh();
 }
 void ViewItemSet::setGraph(Graph *graph){
-	mainWidget->setGraph(graph);
-	this->draw();
+	//mainWidget->setGraph(graph);
+	//this->draw();
 }
 void ViewItemSet::findItemSet(const QString &i){
 	Graph *graph=getGlMainWidget()->getGraph();
@@ -68,5 +68,5 @@ void ViewItemSet::findItemSet(const QString &i){
 	select->setNodeValue(n,true);
 	name->setNodeValue(n,i.toStdString());
 	}delete itNodes;
-	this->draw();
+	//this->draw();
 }
