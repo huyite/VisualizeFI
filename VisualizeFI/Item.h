@@ -9,17 +9,19 @@
 #define ITEM_H_
 #include <string>
 using namespace std;
-class Item {
+class Item
+{
 private:
 	string name;
-
 public:
 	Item();
 	Item(string);
 	virtual ~Item();
 	void setName(string);
-	string getName();
-
+	string getName() const;
+	bool operator > (const Item&) const;
+	bool operator < (const Item&) const;
+	bool operator == (const Item&) const;
 };
 
 #endif /* ITEM_H_ */

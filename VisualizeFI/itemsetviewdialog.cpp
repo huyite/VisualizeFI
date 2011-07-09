@@ -28,8 +28,12 @@ void ItemSetViewDialog::changeEvent(QEvent *e)
         break;
     }
 }
+
 void ItemSetViewDialog::viewitemset(){
-    QString itemset=ui->lineEdit->text();
+	QString its=ui->lineEdit->text();
+	ItemSet itemset;
+	itemset.addItems(its.toStdString(),";");
+	itemset.sortItems();
     emit itemsetChange(itemset);
 }
 /*void ItemSetViewDialog::updateLabel(const QString& its){

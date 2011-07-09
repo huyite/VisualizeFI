@@ -2,7 +2,7 @@
 #define ITEMSETVIEWDIALOG_H
 
 #include <QDialog>
-
+#include "ItemSet.h"
 namespace Ui {
     class ItemSetViewDialog;
 }
@@ -19,7 +19,7 @@ protected:
 private:
     Ui::ItemSetViewDialog *ui;
 signals:
-    void itemsetChange(const QString &);
+    void itemsetChange(const ItemSet &);
 public slots:
    void viewitemset();
    // void updateLabel(const QString& its);

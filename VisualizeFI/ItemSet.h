@@ -10,6 +10,7 @@
 #include <vector>
 #include <string.h>
 #include "Item.h"
+#include <iterator>
 using namespace std;
 class ItemSet {
 private:
@@ -19,7 +20,10 @@ public:
 	ItemSet();
 	virtual ~ItemSet();
 	void addItem(Item);
-	bool removeItem(int);
+	void addItems(const vector<Item>&);
+	void addItems(const vector<string>&);
+	void addItems(const string&,const string&);
+	void removeItem(int);
 	bool checkSubSet(ItemSet &it);
 	bool isEqual(ItemSet &it);
 	int numberOfItem();
@@ -28,6 +32,7 @@ public:
     string getName();
     double getFrequency();
     void IncrFrequency(double);
+    void sortItems();
 
 };
 

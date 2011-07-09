@@ -10,13 +10,18 @@
 
 #include "itemsetviewdialog.h"
 #include <tulip/GlMainView.h>
+#include "ItemSet.h"
 using namespace tlp;
-
+using namespace std;
 class ViewItemSet : public GlMainView{
 
-Q_OBJECT
+Q_OBJECT;
+
 protected:
      ItemSetViewDialog *itemsetviewdialog;
+     Graph *graph;
+     vector<node> leave;
+    //
 public:
 	ViewItemSet();
 	virtual ~ViewItemSet();
@@ -24,12 +29,14 @@ public:
 	virtual void setData(Graph *graph,DataSet dataSet);
 	virtual void getData(Graph **graph,DataSet *dataSet);
     virtual std::list<std::pair<QWidget *,std::string> > getConfigurationWidget();
+    void getLeave(const Graph *,vector<node> &);
 public slots:
     virtual void draw();
     virtual void refresh();
     virtual void init();
     void setGraph(Graph *graph);
-    void findItemSet(const QString& i);
+    void findItemSet(const ItemSet& i);
+
 };
 
 #endif /* VIEWITEMSET_H_ */

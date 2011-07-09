@@ -11,11 +11,21 @@ using namespace std;
 using namespace tlp;
 
 #include <tulip/GlMainWidget.h>
+
 VIEWPLUGIN(ViewItemSet, "ItemSet view", "Huy Nguyen Van", "06/07/2011", "ItemSet view", "1.0");
 
+void ViewItemSet::getLeave(const Graph *graph,vector<node> & leave){
+	Iterator<node> *itNodes = graph->getNodes();
+	while(itNodes->hasNext()) {
+		node n = itNodes->next();
+        if(graph->outdeg(n)==0)
+        	leave.push_back(n);
+		}delete itNodes;
+}
 ViewItemSet::ViewItemSet():GlMainView() {
 	// TODO Auto-generated constructor stub
-
+   this->graph=getGlMainWidget()->getGraph();
+   getLeave(graph,leave);
 }
 
 ViewItemSet::~ViewItemSet() {
@@ -24,11 +34,11 @@ ViewItemSet::~ViewItemSet() {
 QWidget *ViewItemSet::construct(QWidget* parent){
 	QWidget *widget=GlMainView::construct(parent);
 	itemsetviewdialog=new ItemSetViewDialog();
-	QObject::connect(itemsetviewdialog,SIGNAL(itemsetChange(const QString&)),this,SLOT(findItemSet(const QString&)));
+	QObject::connect(itemsetviewdialog,SIGNAL(itemsetChange(const ItemSet&)),this,SLOT(findItemSet(const ItemSet&)));
 	return widget;
 }
 void ViewItemSet::setData(Graph *graph,DataSet dataSet){
-	DataSet data;
+    DataSet data;
 	if(dataSet.exist("glMainWidgetData"))
 	dataSet.get("glMainWidgetData",data);
 	getGlMainWidget()->setData(graph,data);
@@ -51,22 +61,39 @@ void ViewItemSet::refresh(){
 	GlMainView::refresh();
 }
 void ViewItemSet::init(){
-	GlMainView::refresh();
+	//GlMainView::refresh();
 }
 void ViewItemSet::setGraph(Graph *graph){
 	//mainWidget->setGraph(graph);
 	//this->draw();
 }
-void ViewItemSet::findItemSet(const QString &i){
-	Graph *graph=getGlMainWidget()->getGraph();
-	Iterator<node> *itNodes = graph->getNodes();
+bool checkItemSet(node nodeleaf,vector<node> &itemset,const ItemSet& it){
+	StringProperty *name =ViewItemSet::graph->getLocalProperty<StringProperty>("viewLabel");
+	string leaf=nam->//;
+	Item *itemleaf=new Item(leaf);
+	for(int j=0;j<its.numberOfItem();j++){
+	    	   if(itemleaf<its.getItem(j))
+	               return false;
+	    	   if(==)
+	    	   else
+
+
+	    	}
+}
+void ViewItemSet::findItemSet(const ItemSet &its){
 	BooleanProperty *select = graph->getLocalProperty<BooleanProperty>("viewSelection");
 	StringProperty *name = graph->getLocalProperty<StringProperty>("viewLabel");
+    vector<node> temp;
 
-	while(itNodes->hasNext()) {
-	node n = itNodes->next();
-	select->setNodeValue(n,true);
-	name->setNodeValue(n,i.toStdString());
-	}delete itNodes;
-	//this->draw();
+	graph->holdObservers();
+	node cursor;
+	vector<node> itemset; //
+    for(int i=0;i<this->leave.size();i++){
+    	leaf=name->get(leave[i]);
+    	cursor=leave[i];
+
+
+    }
+	graph->unholdObservers();
 }
+

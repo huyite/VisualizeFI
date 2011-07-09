@@ -47,25 +47,7 @@ VisualizeFI::VisualizeFI(AlgorithmContext context):ImportModule(context) {
 VisualizeFI::~VisualizeFI() {
   // TODO Auto-generated destructor stub
 }
-void tokenize(const string& str,
-	      vector<string>& tokens,
-	      const string& delimiters = " ") {
-  if (str.length() == 0) return;
-  string::size_type lastPos = str.find_first_not_of(delimiters, 0);
-  string::size_type pos     = str.find_first_of(delimiters, lastPos);
-  while (string::npos != pos || string::npos != lastPos) {
-    tokens.push_back(str.substr(lastPos, pos - lastPos));
-    string::size_type pos_tmp = str.find_first_of(delimiters, pos+1);
-    if(pos_tmp - pos == 1){
-      lastPos = pos_tmp;
-      pos = pos_tmp;
-    }
-    else {
-      lastPos = str.find_first_not_of(delimiters, pos);
-      pos = str.find_first_of(delimiters, lastPos);
-    }
-  }
-}
+
 double getDoubleVal(string strConvert) {
   double doubleReturn;
   doubleReturn = atof(strConvert.c_str());
@@ -102,6 +84,7 @@ void sortitem(vector<string>& itemset){
 			  if(getDoubleVal(itemset[i])>getDoubleVal(itemset[j]))
 				  swap(itemset[i],itemset[j]);
 }
+
 void VisualizeFI::readFile(const string &file){
   StringProperty *labelItemSet=graph->getLocalProperty<StringProperty>("viewLabel");
   DoubleProperty *frequentItemSet=graph->getLocalProperty<DoubleProperty>("viewFrequent");
@@ -122,29 +105,30 @@ void VisualizeFI::readFile(const string &file){
   node nodeNull=graph->addNode();
   node curNode;
   node pointerSon;
-
   labelItemSet->setNodeValue(nodeNull,"NULL");
   frequentItemSet->setNodeValue(nodeNull,0);
   int curLineNb = 0;
+  ItemSet itemset;
   while(getline(ifile,line)){
     ++curLineNb;
-    tokenize(line,buf,separator);
-    int size=buf.size();
-    if(!buf.empty())
+    itemset.addItem(line);
+    int size=itemset.numberOfItem();
+    if(size!=0)
       if(this->model==1)
-	this->FI.buildItemsetM1(buf);
+      {  }//this->FI.buildItemsetM1(buf);
       else
       {
     	         curNode=nodeNull;   //cursor node
     	     	 double fr=getDoubleVal(buf[size-1]);
-    	     	  sortitem(buf);
+    	     	 itemset.removeItem(size-1);
+    	     	 //sortitem(buf);
     	          for(int i=0;i<size-1;i++)
     	          {
-    	        	 pointerSon=isNodeSon(buf[i],curNode);
+    	        	 pointerSon=isNodeSon(itemset.getItem(i).getName(),curNode);
     	         	 if(!pointerSon.isValid()){
     	        	     node n= node();
     	        	     n=graph->addNode();
-    	         		 labelItemSet->setNodeStringValue(n,buf[i]);
+    	         		 labelItemSet->setNodeStringValue(n,itemset.getItem(i).getName());
     	         		 frequentItemSet->setNodeValue(n,fr);
     	         		 edge e=graph->addEdge(curNode,n);
     	         		 curNode=n;

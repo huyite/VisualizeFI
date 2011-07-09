@@ -46,14 +46,14 @@ ItemSet addItems(char* vars,vector<string> arrItem,int frequency){
     return itemset;
 
  }
-
+/*
 double GetDoubleVal(string strConvert) {
   double doubleReturn;
   doubleReturn = atof(strConvert.c_str());
   return(doubleReturn);
-}
+}*/
 /////////////////////////////////////////////////////
-void FrequentItemSet::buildItemsetM1(const vector<string> &arrItem){
+/*void FrequentItemSet::buildItemsetM1(const vector<string> &arrItem){
     int size=arrItem.size()-1;
 	char* buf=new char[size];
     double frItemSet=GetDoubleVal(arrItem[size]);
@@ -68,7 +68,8 @@ void FrequentItemSet::buildItemsetM1(const vector<string> &arrItem){
     }
 
    delete[] buf;
-}
+}*/
+/*
 void sortItem(vector<string>&arrItem){
 	string temp="";
 	for(int i=0;i<arrItem.size()-2;i++)
@@ -79,14 +80,14 @@ void sortItem(vector<string>&arrItem){
 				arrItem[j]=temp;
 			}
 }
-
-
+*/
+/*
 void swap(ItemSet &it1,ItemSet &it2){
 	ItemSet temp;
 	temp=it1;
 	it1=it2;
 	it2=temp;
-}
+}*/
 // check itemset Exit or not in intemsets
 bool FrequentItemSet::isExitItemSet(ItemSet &itemset ){
    for(int i=0;i<this->getSize();i++)

@@ -19,8 +19,8 @@ ItemSet::~ItemSet() {
 void ItemSet::addItem(Item item){
          this->items.push_back(item);
 }
-bool ItemSet::removeItem(int index){
-	return true;
+void ItemSet::removeItem(int index){
+	this->items.erase(items.begin()+index);
 }
 bool ItemSet::checkSubSet(ItemSet &it){
 	for(int i=0;i<it.numberOfItem();i++)
@@ -69,3 +69,52 @@ void ItemSet::IncrFrequency(double fr){
 	this->frequency+=fr;
 }
 
+void tokenize(const string& str,
+	      vector<string>& tokens,
+	      const string& delimiters = " ") {
+  if (str.length() == 0) return;
+  string::size_type lastPos = str.find_first_not_of(delimiters, 0);
+  string::size_type pos     = str.find_first_of(delimiters, lastPos);
+  while (string::npos != pos || string::npos != lastPos) {
+    tokens.push_back(str.substr(lastPos, pos - lastPos));
+    string::size_type pos_tmp = str.find_first_of(delimiters, pos+1);
+    if(pos_tmp - pos == 1){
+      lastPos = pos_tmp;
+      pos = pos_tmp;
+    }
+    else {
+      lastPos = str.find_first_not_of(delimiters, pos);
+      pos = str.find_first_of(delimiters, lastPos);
+    }
+  }
+}
+void ItemSet::addItems(const string& st,const string& delimiters){
+	vector<string> itemset;
+	tokenize(st,itemset,delimiters);
+	this->addItems(itemset);
+	}
+void ItemSet::addItems(const vector<string> &items){
+
+    for(int i=0;i<items.size();i++){
+    	Item item(items[i]);
+    	this->addItem(item);
+    }
+}
+void ItemSet::addItems(const vector<Item>& its){
+	  for(int i=0;i<its.size();i++){
+	    	this->addItem(its[i]);
+	    }
+}
+void swap(ItemSet &it1,ItemSet &it2){
+	ItemSet temp;
+	temp=it1;
+	it1=it2;
+	it2=temp;
+}
+void ItemSet::sortItems(){
+    for(int i=0;i<this->items.size()-1;i++)
+      for(int j=0;j<this->items.size();i++)
+    	if(items[i]>items[j])
+    		swap(items[i],items[j]);
+
+}
