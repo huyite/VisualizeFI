@@ -19,7 +19,6 @@ Q_OBJECT;
 
 protected:
      ItemSetViewDialog *itemsetviewdialog;
-     Graph *graph;
      vector<node> leave;
     //
 public:
@@ -30,6 +29,8 @@ public:
 	virtual void getData(Graph **graph,DataSet *dataSet);
     virtual std::list<std::pair<QWidget *,std::string> > getConfigurationWidget();
     void getLeave(const Graph *,vector<node> &);
+protected:
+    bool checkItemSet(node nodeleaf,vector<node> &nodeitemset,const ItemSet& its);
 public slots:
     virtual void draw();
     virtual void refresh();

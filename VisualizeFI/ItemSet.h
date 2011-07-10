@@ -26,11 +26,11 @@ public:
 	void removeItem(int);
 	bool checkSubSet(ItemSet &it);
 	bool isEqual(ItemSet &it);
-	int numberOfItem();
-	Item getItem(int);
+	int numberOfItem()const;
+	Item getItem(int) const;
     bool isExitItem(Item);
-    string getName();
-    double getFrequency();
+    string getName()const;
+    double getFrequency() const;
     void IncrFrequency(double);
     void sortItems();
 

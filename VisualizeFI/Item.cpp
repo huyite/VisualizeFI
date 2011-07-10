@@ -38,4 +38,9 @@ bool Item::operator > (const Item& it )const{
 	  return true;
   else false;
 }
-
+bool Item::operator ==(const Item& it)const{
+	return true;
+}
+bool Item::operator <(const Item& it)const{
+	return true;
+}

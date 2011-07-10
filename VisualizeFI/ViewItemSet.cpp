@@ -24,8 +24,7 @@ void ViewItemSet::getLeave(const Graph *graph,vector<node> & leave){
 }
 ViewItemSet::ViewItemSet():GlMainView() {
 	// TODO Auto-generated constructor stub
-   this->graph=getGlMainWidget()->getGraph();
-   getLeave(graph,leave);
+
 }
 
 ViewItemSet::~ViewItemSet() {
@@ -67,33 +66,52 @@ void ViewItemSet::setGraph(Graph *graph){
 	//mainWidget->setGraph(graph);
 	//this->draw();
 }
-bool checkItemSet(node nodeleaf,vector<node> &itemset,const ItemSet& it){
-	StringProperty *name =ViewItemSet::graph->getLocalProperty<StringProperty>("viewLabel");
-	string leaf=nam->//;
+bool ViewItemSet::checkItemSet(node nodeleaf,vector<node> &nodeitemset,const ItemSet& its){
+	Graph *graph=getGlMainWidget()->getGraph();
+	StringProperty *name =graph->getLocalProperty<StringProperty>("viewLabel");
+	string leaf=name->getNodeStringValue(nodeleaf);
 	Item *itemleaf=new Item(leaf);
+	node cursor=nodeleaf;
 	for(int j=0;j<its.numberOfItem();j++){
-	    	   if(itemleaf<its.getItem(j))
-	               return false;
-	    	   if(==)
-	    	   else
+		      while(!graph->indeg(cursor)==0){
+		    	  if(*itemleaf<its.getItem(j))
+		    	 	       return false;
 
-
-	    	}
+		    	  if(*(itemleaf)==its.getItem(j)){
+		    		  nodeitemset.push_back(cursor);
+		    		  cursor=graph->getInNode(cursor,0);
+		    		  leaf=name->getNodeStringValue(cursor);
+		    		  itemleaf->setName(leaf);
+		    		  break;
+		    	  }else{
+		    		  cursor=graph->getInNode(cursor,0);
+		    		  leaf=name->getNodeStringValue(cursor);
+		    		  itemleaf->setName(leaf);
+		    	  }
+		      }
+	}
+	if(nodeitemset.size()==its.numberOfItem())
+		return true;
+	else return false;
 }
 void ViewItemSet::findItemSet(const ItemSet &its){
+	getLeave(getGlMainWidget()->getGraph(),leave);
+	Graph *graph=getGlMainWidget()->getGraph();
 	BooleanProperty *select = graph->getLocalProperty<BooleanProperty>("viewSelection");
 	StringProperty *name = graph->getLocalProperty<StringProperty>("viewLabel");
     vector<node> temp;
-
+    node n;
 	graph->holdObservers();
-	node cursor;
-	vector<node> itemset; //
-    for(int i=0;i<this->leave.size();i++){
-    	leaf=name->get(leave[i]);
-    	cursor=leave[i];
 
-
-    }
+	for(int i=0;i<this->leave.size();i++)
+	{
+		if(checkItemSet(leave[i],temp,its))
+	       for(int j=0;j<temp.size();j++)
+    	   { n=temp[j];
+    	    select->setNodeValue(n,true);
+	        }
+		  temp.clear();
+	}
 	graph->unholdObservers();
 }
 

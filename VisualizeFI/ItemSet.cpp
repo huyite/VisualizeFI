@@ -50,19 +50,19 @@ bool ItemSet::isExitItem(Item it){
 
 		return false;
 }
-Item ItemSet::getItem(int index){
+Item ItemSet::getItem(int index)const{
 	return items[index];
 }
-int ItemSet::numberOfItem(){
+int ItemSet::numberOfItem()const{
 	return this->items.size();
 }
-string ItemSet::getName(){
+string ItemSet::getName() const{
 	string s=this->getItem(0).getName();
 	for(int i=1;i<this->numberOfItem();i++)
 		s+=";"+this->getItem(i).getName();
 	return s;
 }
-double ItemSet::getFrequency(){
+double ItemSet::getFrequency()const{
 	return this->frequency;
 }
 void ItemSet::IncrFrequency(double fr){
