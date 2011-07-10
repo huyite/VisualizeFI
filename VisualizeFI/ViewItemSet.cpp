@@ -73,7 +73,7 @@ bool ViewItemSet::checkItemSet(node nodeleaf,vector<node> &nodeitemset,const Ite
 	Item *itemleaf=new Item(leaf);
 	node cursor=nodeleaf;
 	for(int j=0;j<its.numberOfItem();j++){
-		      while(!graph->indeg(cursor)==0){
+		      while(!graph->iindeg(cursor)==0){
 		    	  if(*itemleaf<its.getItem(j))
 		    	 	       return false;
 
@@ -108,7 +108,8 @@ void ViewItemSet::findItemSet(const ItemSet &its){
 		if(checkItemSet(leave[i],temp,its))
 	       for(int j=0;j<temp.size();j++)
     	   { n=temp[j];
-    	    select->setNodeValue(n,true);
+    	    select->setasetNodeValue(n,true);
+
 	        }
 		  temp.clear();
 	}
