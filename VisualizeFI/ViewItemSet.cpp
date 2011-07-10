@@ -34,6 +34,7 @@ QWidget *ViewItemSet::construct(QWidget* parent){
 	QWidget *widget=GlMainView::construct(parent);
 	itemsetviewdialog=new ItemSetViewDialog();
 	QObject::connect(itemsetviewdialog,SIGNAL(itemsetChange(const ItemSet&)),this,SLOT(findItemSet(const ItemSet&)));
+	QObject::connect(this,SIGNAL(freqItemSet(double )),itemsetviewdialog,SLOT(updateFrItemSet(double )));
 	return widget;
 }
 void ViewItemSet::setData(Graph *graph,DataSet dataSet){
@@ -72,19 +73,19 @@ bool ViewItemSet::checkItemSet(node nodeleaf,vector<node> &nodeitemset,const Ite
 	string leaf=name->getNodeStringValue(nodeleaf);
 	Item *itemleaf=new Item(leaf);
 	node cursor=nodeleaf;
-	for(int j=0;j<its.numberOfItem();j++){
-		      while(!graph->iindeg(cursor)==0){
+	for(int j=its.numberOfItem()-1;j>-1;j--){
+		      while(!graph->indeg(cursor)==0){
 		    	  if(*itemleaf<its.getItem(j))
 		    	 	       return false;
 
 		    	  if(*(itemleaf)==its.getItem(j)){
 		    		  nodeitemset.push_back(cursor);
-		    		  cursor=graph->getInNode(cursor,0);
+		    		  cursor=graph->getInNode(cursor,1);
 		    		  leaf=name->getNodeStringValue(cursor);
 		    		  itemleaf->setName(leaf);
 		    		  break;
 		    	  }else{
-		    		  cursor=graph->getInNode(cursor,0);
+		    		  cursor=graph->getInNode(cursor,1);
 		    		  leaf=name->getNodeStringValue(cursor);
 		    		  itemleaf->setName(leaf);
 		    	  }
@@ -98,21 +99,30 @@ void ViewItemSet::findItemSet(const ItemSet &its){
 	getLeave(getGlMainWidget()->getGraph(),leave);
 	Graph *graph=getGlMainWidget()->getGraph();
 	BooleanProperty *select = graph->getLocalProperty<BooleanProperty>("viewSelection");
-	StringProperty *name = graph->getLocalProperty<StringProperty>("viewLabel");
+	DoubleProperty *frequent = graph->getLocalProperty<DoubleProperty>("viewFrequent");
     vector<node> temp;
     node n;
-	graph->holdObservers();
-
+    double fr=0.0;
+  	graph->holdObservers();
+	select->setAllNodeValue(false);
+	 fr=0;
 	for(int i=0;i<this->leave.size();i++)
 	{
-		if(checkItemSet(leave[i],temp,its))
-	       for(int j=0;j<temp.size();j++)
-    	   { n=temp[j];
-    	    select->setasetNodeValue(n,true);
 
-	        }
+		if(checkItemSet(leave[i],temp,its)){
+			for(int j=0;j<temp.size();j++)
+    	      { n=temp[j];
+    	        select->setNodeValue(n,true);
+    	      }
+			fr=fr+frequent->getNodeValue(leave[i]);
+		   }
+
 		  temp.clear();
+
 	}
+
+	emit freqItemSet(fr);
+     leave.clear();
 	graph->unholdObservers();
 }
 

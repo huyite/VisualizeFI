@@ -31,6 +31,8 @@ public:
     void getLeave(const Graph *,vector<node> &);
 protected:
     bool checkItemSet(node nodeleaf,vector<node> &nodeitemset,const ItemSet& its);
+signals:
+    void freqItemSet(double );
 public slots:
     virtual void draw();
     virtual void refresh();

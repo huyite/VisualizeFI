@@ -36,6 +36,8 @@ void ItemSetViewDialog::viewitemset(){
 	itemset.sortItems();
     emit itemsetChange(itemset);
 }
-void ItemSetViewDialog::updateLabel(const double& its){
-	ui->label->setText(its);
+void ItemSetViewDialog::updateFrItemSet(double fr){
+    QVariant temp(fr);
+    ui->label->setText(temp.toString());
+
 }

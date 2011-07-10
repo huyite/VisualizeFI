@@ -33,7 +33,7 @@ public:
     double getFrequency() const;
     void IncrFrequency(double);
     void sortItems();
-
+    void clear();
 };
 
 #endif /* ITEMSET_H_ */

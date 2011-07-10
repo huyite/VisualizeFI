@@ -32,15 +32,13 @@ double GetDoubleVal(const string& strConvert) {
   return(doubleReturn);
 }
 bool Item::operator > (const Item& it )const{
-	const string st1=this->getName();
-	const string st2=it.getName();
-  if(GetDoubleVal(st1)>GetDoubleVal(st2))
-	  return true;
-  else false;
+return GetDoubleVal(this->getName())>GetDoubleVal(it.getName());
+
 }
 bool Item::operator ==(const Item& it)const{
-	return true;
+	return GetDoubleVal(this->getName())==GetDoubleVal(it.getName());
+
 }
 bool Item::operator <(const Item& it)const{
-	return true;
+	return GetDoubleVal(this->getName())<GetDoubleVal(it.getName());
 }

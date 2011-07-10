@@ -22,7 +22,7 @@ signals:
     void itemsetChange(const ItemSet &);
 public slots:
    void viewitemset();
-   // void updateLabel(const QString& its);
+   void updateFrItemSet(double);
 
 };
 

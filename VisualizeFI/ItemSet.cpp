@@ -7,7 +7,7 @@
 
 #include "ItemSet.h"
 #include <stdio.h>
-
+#include <stdlib.h>
 ItemSet::ItemSet() {
 	// TODO Auto-generated constructor stub
     this->frequency=0;
@@ -58,6 +58,7 @@ int ItemSet::numberOfItem()const{
 }
 string ItemSet::getName() const{
 	string s=this->getItem(0).getName();
+	if(this->numberOfItem()>1)
 	for(int i=1;i<this->numberOfItem();i++)
 		s+=";"+this->getItem(i).getName();
 	return s;
@@ -105,16 +106,20 @@ void ItemSet::addItems(const vector<Item>& its){
 	    	this->addItem(its[i]);
 	    }
 }
-void swap(ItemSet &it1,ItemSet &it2){
-	ItemSet temp;
-	temp=it1;
-	it1=it2;
-	it2=temp;
+void swap(Item &it1,Item &it2){
+	Item temp;
+	temp.setName(it1.getName());
+	it1.setName(it2.getName());
+	it2.setName(temp.getName());
 }
+
 void ItemSet::sortItems(){
-    for(int i=0;i<this->items.size()-1;i++)
-      for(int j=0;j<this->items.size();i++)
-    	if(items[i]>items[j])
+    for(int i=0;i<this->items.size();i++)
+      for(int j=i;j<this->items.size();j++)
+    	if( items[i]> items[j])
     		swap(items[i],items[j]);
 
+}
+void ItemSet::clear(){
+	this->items.clear();
 }

@@ -48,11 +48,6 @@ VisualizeFI::~VisualizeFI() {
   // TODO Auto-generated destructor stub
 }
 
-double getDoubleVal(string strConvert) {
-  double doubleReturn;
-  doubleReturn = atof(strConvert.c_str());
-  return(doubleReturn);
-}
 node VisualizeFI::isNodeSon(const string & name,const node &curNode){
 	  StringProperty *labelItemSet=graph->getLocalProperty<StringProperty>("viewLabel");
 	  DoubleProperty *frequentItemSet=graph->getLocalProperty<DoubleProperty>("viewFrequent");
@@ -72,19 +67,6 @@ node VisualizeFI::isNodeSon(const string & name,const node &curNode){
 
 	return nodeNull;
 }
-void swapitem(string &it1,string &it2){
-	string temp;
-	temp=it1;
-	it1=it2;
-	it2=temp;
-}
-void sortitem(vector<string>& itemset){
-	 for(int i=0;i<itemset.size()-1;i++)
-		  for(int j=i;j<itemset.size()-1;j++)
-			  if(getDoubleVal(itemset[i])>getDoubleVal(itemset[j]))
-				  swap(itemset[i],itemset[j]);
-}
-
 void VisualizeFI::readFile(const string &file){
   StringProperty *labelItemSet=graph->getLocalProperty<StringProperty>("viewLabel");
   DoubleProperty *frequentItemSet=graph->getLocalProperty<DoubleProperty>("viewFrequent");
@@ -100,7 +82,6 @@ void VisualizeFI::readFile(const string &file){
   string endmsg = " of "+ s.str() + " itemsets";
   ifstream ifile(file.c_str(),ifstream::in);
   string line;
-  vector<string> buf;
 
   node nodeNull=graph->addNode();
   node curNode;
@@ -111,7 +92,7 @@ void VisualizeFI::readFile(const string &file){
   ItemSet itemset;
   while(getline(ifile,line)){
     ++curLineNb;
-    itemset.addItem(line);
+    itemset.addItems(line,";");
     int size=itemset.numberOfItem();
     if(size!=0)
       if(this->model==1)
@@ -119,9 +100,9 @@ void VisualizeFI::readFile(const string &file){
       else
       {
     	         curNode=nodeNull;   //cursor node
-    	     	 double fr=getDoubleVal(buf[size-1]);
-    	     	 itemset.removeItem(size-1);
-    	     	 //sortitem(buf);
+    	     	 double fr= atof(itemset.getItem(size-1).getName().c_str());
+    	     	 itemset.removeItem(size);
+    	     	 itemset.sortItems();
     	          for(int i=0;i<size-1;i++)
     	          {
     	        	 pointerSon=isNodeSon(itemset.getItem(i).getName(),curNode);
@@ -140,8 +121,9 @@ void VisualizeFI::readFile(const string &file){
     	         	 }
     	          }
 
+
       }
-    buf.clear();
+    itemset.clear();
     stringstream s2;
     s2 << curLineNb;
     pluginProgress->setComment(msg+s2.str()+endmsg);
@@ -167,8 +149,8 @@ bool VisualizeFI::import(const std::string &){
   this->readFile(filename);
   if(this->model==1){
   this->FI.sortItemsets();
-  this->buildNodes();
-  this->buildEdges();
+  //this->buildNodes();
+ // this->buildEdges();
   }
   return true;
 }
