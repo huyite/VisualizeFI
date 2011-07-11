@@ -28,34 +28,50 @@ public:
     QLineEdit *lineEdit;
     QLabel *label;
     QPushButton *pushButton;
+    QLabel *label_2;
+    QLabel *label_3;
+    QLabel *label_4;
+
 
     void setupUi(QDialog *Dialog)
     {
-        if (Dialog->objectName().isEmpty())
-            Dialog->setObjectName(QString::fromUtf8("Dialog"));
-        Dialog->resize(400, 300);
-        lineEdit = new QLineEdit(Dialog);
-        lineEdit->setObjectName(QString::fromUtf8("lineEdit"));
-        lineEdit->setGeometry(QRect(90, 110, 191, 27));
-        label = new QLabel(Dialog);
-        label->setObjectName(QString::fromUtf8("label"));
-        label->setGeometry(QRect(140, 230, 91, 41));
-        pushButton = new QPushButton(Dialog);
-        pushButton->setObjectName(QString::fromUtf8("pushButton"));
-        pushButton->setGeometry(QRect(140, 170, 93, 27));
+    	 if (Dialog->objectName().isEmpty())
+    	            Dialog->setObjectName(QString::fromUtf8("Dialog"));
+    	        Dialog->resize(400, 300);
+    	        lineEdit = new QLineEdit(Dialog);
+    	        lineEdit->setObjectName(QString::fromUtf8("lineEdit"));
+    	        lineEdit->setGeometry(QRect(120, 100, 191, 27));
+    	        label = new QLabel(Dialog);
+    	        label->setObjectName(QString::fromUtf8("label"));
+    	        label->setGeometry(QRect(160, 220, 91, 41));
+    	        pushButton = new QPushButton(Dialog);
+    	        pushButton->setObjectName(QString::fromUtf8("pushButton"));
+    	        pushButton->setGeometry(QRect(160, 160, 93, 27));
+    	        label_2 = new QLabel(Dialog);
+    	        label_2->setObjectName(QString::fromUtf8("label_2"));
+    	        label_2->setGeometry(QRect(10, 100, 101, 20));
+    	        label_3 = new QLabel(Dialog);
+    	        label_3->setObjectName(QString::fromUtf8("label_3"));
+    	        label_3->setGeometry(QRect(40, 220, 91, 41));
+    	        label_4 = new QLabel(Dialog);
+    	        label_4->setObjectName(QString::fromUtf8("label_4"));
+    	        label_4->setGeometry(QRect(120, 30, 181, 17));
 
-        retranslateUi(Dialog);
-        QObject::connect(pushButton, SIGNAL(clicked()), lineEdit, SLOT(copy()));
-        QObject::connect(pushButton, SIGNAL(clicked()), label, SLOT(update()));
+    	        retranslateUi(Dialog);
+    	       // QObject::connect(pushButton, SIGNAL(clicked()), lineEdit, SLOT(copy()));
+    	        //QObject::connect(pushButton, SIGNAL(clicked()), label, SLOT(update()));
 
-        QMetaObject::connectSlotsByName(Dialog);
+    	        QMetaObject::connectSlotsByName(Dialog);
     } // setupUi
 
     void retranslateUi(QDialog *Dialog)
     {
-        Dialog->setWindowTitle(QApplication::translate("Dialog", "Dialog", 0, QApplication::UnicodeUTF8));
-        label->setText(QApplication::translate("Dialog", "rtrtretertertretret", 0, QApplication::UnicodeUTF8));
-        pushButton->setText(QApplication::translate("Dialog", "PushButton", 0, QApplication::UnicodeUTF8));
+            Dialog->setWindowTitle(QApplication::translate("Dialog", "Dialog", 0, QApplication::UnicodeUTF8));
+            label->setText(QString());
+            pushButton->setText(QApplication::translate("Dialog", "OK", 0, QApplication::UnicodeUTF8));
+            label_2->setText(QApplication::translate("Dialog", "Input ItemSet :", 0, QApplication::UnicodeUTF8));
+            label_3->setText(QApplication::translate("Dialog", "Frequency:", 0, QApplication::UnicodeUTF8));
+            label_4->setText(QApplication::translate("Dialog", "Visualize Frequent ItemSet", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };
