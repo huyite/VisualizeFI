@@ -11,14 +11,14 @@
 
 #include <tulip/TulipPlugin.h>
 #include <tulip/ImportModule.h>
-#include "FrequentItemSet.h"
+#include "ItemSet.h"
 #include <vector>
 using namespace std;
 using namespace tlp;
 
 class VisualizeFI: public ImportModule {
 private:
-      FrequentItemSet FI;
+	  vector<ItemSet> itemsets;
       vector<node> nodes;
       vector<edge> edges;
       string separator;
@@ -32,6 +32,8 @@ public:
     virtual bool import(const string &);
     void readFile(const string &file);
     node isNodeSon(const string &,const node &);
+    bool isExitItemSet(ItemSet &itemset );
+    void orderItemsets();
 
 };
 

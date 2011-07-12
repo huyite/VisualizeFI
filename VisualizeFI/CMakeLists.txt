@@ -13,7 +13,6 @@ STRING(TOLOWER ${PLUGIN_NAME} PLUGIN_NAME)
 
 # Declare plugin sources files (as .cpp files)
 SET(LIB_SRCS
- FrequentItemSet.cpp
  Item.cpp
  ItemSet.cpp
  VisualizeFI.cpp

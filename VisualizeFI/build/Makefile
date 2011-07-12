@@ -152,30 +152,6 @@ visualizefi-3.5.1/fast:
 	$(MAKE) -f CMakeFiles/visualizefi-3.5.1.dir/build.make CMakeFiles/visualizefi-3.5.1.dir/build
 .PHONY : visualizefi-3.5.1/fast
 
-FrequentItemSet.o: FrequentItemSet.cpp.o
-.PHONY : FrequentItemSet.o
-
-# target to build an object file
-FrequentItemSet.cpp.o:
-	$(MAKE) -f CMakeFiles/visualizefi-3.5.1.dir/build.make CMakeFiles/visualizefi-3.5.1.dir/FrequentItemSet.cpp.o
-.PHONY : FrequentItemSet.cpp.o
-
-FrequentItemSet.i: FrequentItemSet.cpp.i
-.PHONY : FrequentItemSet.i
-
-# target to preprocess a source file
-FrequentItemSet.cpp.i:
-	$(MAKE) -f CMakeFiles/visualizefi-3.5.1.dir/build.make CMakeFiles/visualizefi-3.5.1.dir/FrequentItemSet.cpp.i
-.PHONY : FrequentItemSet.cpp.i
-
-FrequentItemSet.s: FrequentItemSet.cpp.s
-.PHONY : FrequentItemSet.s
-
-# target to generate assembly for a file
-FrequentItemSet.cpp.s:
-	$(MAKE) -f CMakeFiles/visualizefi-3.5.1.dir/build.make CMakeFiles/visualizefi-3.5.1.dir/FrequentItemSet.cpp.s
-.PHONY : FrequentItemSet.cpp.s
-
 Item.o: Item.cpp.o
 .PHONY : Item.o
 
@@ -357,9 +333,6 @@ help:
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... visualizefi-3.5.1"
-	@echo "... FrequentItemSet.o"
-	@echo "... FrequentItemSet.i"
-	@echo "... FrequentItemSet.s"
 	@echo "... Item.o"
 	@echo "... Item.i"
 	@echo "... Item.s"
