@@ -7,6 +7,7 @@
 
 #include "ViewItemSet.h"
 #include "itemsetviewdialog.h"
+#include <tulip/Interactor.h>
 using namespace std;
 using namespace tlp;
 
@@ -106,8 +107,7 @@ void ViewItemSet::findItemSet(const ItemSet &its){
   	graph->holdObservers();
 	select->setAllNodeValue(false);
 	 fr=0;
-	for(int i=0;i<this->leave.size();i++)
-	{
+	for(int i=0;i<this->leave.size();i++){
 
 		if(checkItemSet(leave[i],temp,its)){
 			for(int j=0;j<temp.size();j++)
@@ -125,4 +125,4 @@ void ViewItemSet::findItemSet(const ItemSet &its){
      leave.clear();
 	graph->unholdObservers();
 }
-
+INTERACTORPLUGINVIEWEXTENSION(ViewItemSetNavigation,"ViewItemSetNavigation","InteractorNavigation","ItemSet view","","","Navigation","1")
