@@ -88,6 +88,19 @@
     <string>Visualize Frequent ItemSet</string>
    </property>
   </widget>
+  <widget class="QCheckBox" name="checkBox">
+   <property name="geometry">
+    <rect>
+     <x>120</x>
+     <y>130</y>
+     <width>111</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Rebuild Tree</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections>

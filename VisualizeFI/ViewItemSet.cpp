@@ -68,7 +68,7 @@ void ViewItemSet::setGraph(Graph *graph){
 	//mainWidget->setGraph(graph);
 	//this->draw();
 }
-bool ViewItemSet::checkItemSet(node nodeleaf,vector<node> &nodeitemset,const ItemSet& its){
+bool ViewItemSet::checkItemSet(node nodeleaf,vector<node> &nodeitemset,vector<edge> &path,const ItemSet& its){
 	Graph *graph=getGlMainWidget()->getGraph();
 	StringProperty *name =graph->getLocalProperty<StringProperty>("viewLabel");
 	string leaf=name->getNodeStringValue(nodeleaf);
@@ -81,16 +81,26 @@ bool ViewItemSet::checkItemSet(node nodeleaf,vector<node> &nodeitemset,const Ite
 
 		    	  if(*(itemleaf)==its.getItem(j)){
 		    		  nodeitemset.push_back(cursor);
+
 		    		  cursor=graph->getInNode(cursor,1);
 		    		  leaf=name->getNodeStringValue(cursor);
 		    		  itemleaf->setName(leaf);
 		    		  break;
 		    	  }else{
+
 		    		  cursor=graph->getInNode(cursor,1);
 		    		  leaf=name->getNodeStringValue(cursor);
 		    		  itemleaf->setName(leaf);
 		    	  }
 		      }
+	}
+
+	if(nodeitemset.size()>1)
+	{	cursor=nodeitemset[0];
+		while(cursor!=nodeitemset[nodeitemset.size()-1]){
+		path.push_back((graph->getInEdges(cursor))->next());
+		cursor=graph->getInNode(cursor,1);
+		}
 	}
 	if(nodeitemset.size()==its.numberOfItem())
 		return true;
@@ -102,27 +112,30 @@ void ViewItemSet::findItemSet(const ItemSet &its){
 	BooleanProperty *select = graph->getLocalProperty<BooleanProperty>("viewSelection");
 	DoubleProperty *frequent = graph->getLocalProperty<DoubleProperty>("viewFrequent");
     vector<node> temp;
-    node n;
+    vector<edge> path;
+
     double fr=0.0;
   	graph->holdObservers();
 	select->setAllNodeValue(false);
+	select->setAllEdgeValue(false);
 	 fr=0;
 	for(int i=0;i<this->leave.size();i++){
-
-		if(checkItemSet(leave[i],temp,its)){
+    	if(checkItemSet(leave[i],temp,path,its)){
 			for(int j=0;j<temp.size();j++)
-    	      { n=temp[j];
-    	        select->setNodeValue(n,true);
-    	      }
+    	         select->setNodeValue(temp[j],true);
+
+			for(int k=0;k<path.size();k++)
+			     select->setEdgeValue(path[k],true);
+
 			fr=fr+frequent->getNodeValue(leave[i]);
 		   }
 
 		  temp.clear();
-
+          path.clear();
 	}
 
 	emit freqItemSet(fr);
-     leave.clear();
+    leave.clear();
 	graph->unholdObservers();
 }
 INTERACTORPLUGINVIEWEXTENSION(ViewItemSetNavigation,"ViewItemSetNavigation","InteractorNavigation","ItemSet view","","","Navigation","1")

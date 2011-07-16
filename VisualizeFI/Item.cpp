@@ -7,6 +7,7 @@
 
 #include "Item.h"
 #include <stdlib.h>
+#include <string.h>
 
 Item::Item() {
 	// TODO Auto-generated constructor stub
@@ -26,19 +27,15 @@ void Item::setName(string name){
 	this->name=name;
 }
 
-double GetDoubleVal(const string& strConvert) {
-  double doubleReturn;
-  doubleReturn = atof(strConvert.c_str());
-  return(doubleReturn);
-}
+
 bool Item::operator > (const Item& it )const{
-return GetDoubleVal(this->getName())>GetDoubleVal(it.getName());
+return strcmp(this->getName().c_str(),it.getName().c_str())>0;
 
 }
 bool Item::operator ==(const Item& it)const{
-	return GetDoubleVal(this->getName())==GetDoubleVal(it.getName());
+	return strcmp(this->getName().c_str(),it.getName().c_str())==0;
 
 }
 bool Item::operator <(const Item& it)const{
-	return GetDoubleVal(this->getName())<GetDoubleVal(it.getName());
+	return strcmp(this->getName().c_str(),it.getName().c_str())<0;;
 }

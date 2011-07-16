@@ -30,7 +30,7 @@ public:
     virtual std::list<std::pair<QWidget *,std::string> > getConfigurationWidget();
     void getLeave(const Graph *,vector<node> &);
 protected:
-    bool checkItemSet(node nodeleaf,vector<node> &nodeitemset,const ItemSet& its);
+    bool checkItemSet(node,vector<node> &,vector<edge>&,const ItemSet&);
 signals:
     void freqItemSet(double );
 public slots:
