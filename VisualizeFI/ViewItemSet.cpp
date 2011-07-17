@@ -81,7 +81,6 @@ bool ViewItemSet::checkItemSet(node nodeleaf,vector<node> &nodeitemset,vector<ed
 
 		    	  if(*(itemleaf)==its.getItem(j)){
 		    		  nodeitemset.push_back(cursor);
-
 		    		  cursor=graph->getInNode(cursor,1);
 		    		  leaf=name->getNodeStringValue(cursor);
 		    		  itemleaf->setName(leaf);
@@ -137,5 +136,8 @@ void ViewItemSet::findItemSet(const ItemSet &its){
 	emit freqItemSet(fr);
     leave.clear();
 	graph->unholdObservers();
+}
+void ViewItemSet::reBuildTree(){
+
 }
 INTERACTORPLUGINVIEWEXTENSION(ViewItemSetNavigation,"ViewItemSetNavigation","InteractorNavigation","ItemSet view","","","Navigation","1")

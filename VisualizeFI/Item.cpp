@@ -12,10 +12,11 @@
 Item::Item() {
 	// TODO Auto-generated constructor stub
     this->name="";
+    this->priority=false;
 }
 Item::Item(string name){//this is itemset
 	this->name=name;
-
+	this->priority=false;
 }
 Item::~Item() {
 	// TODO Auto-generated destructor stub
@@ -26,16 +27,18 @@ Item::~Item() {
 void Item::setName(string name){
 	this->name=name;
 }
-
+void Item::setPriority(bool b){
+	this->priority=b;
+}
 
 bool Item::operator > (const Item& it )const{
-return strcmp(this->getName().c_str(),it.getName().c_str())>0;
+return (this->priority==it.priority)?strcmp(this->getName().c_str(),it.getName().c_str())>0:this->priority;
 
 }
 bool Item::operator ==(const Item& it)const{
-	return strcmp(this->getName().c_str(),it.getName().c_str())==0;
+	return (this->priority==it.priority)?strcmp(this->getName().c_str(),it.getName().c_str())==0:this->priority;
 
 }
 bool Item::operator <(const Item& it)const{
-	return strcmp(this->getName().c_str(),it.getName().c_str())<0;;
+	return (this->priority==it.priority)?strcmp(this->getName().c_str(),it.getName().c_str())<0:this->priority;
 }

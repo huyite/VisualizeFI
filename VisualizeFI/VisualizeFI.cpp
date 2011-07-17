@@ -30,6 +30,23 @@ const char
 		HTML_HELP_BODY()
 		"Please select model 1 or 2."
 		HTML_HELP_CLOSE(),
+
+		// Tree layout
+		HTML_HELP_OPEN() \
+		HTML_HELP_DEF( "type", "boolean" ) \
+		HTML_HELP_DEF( "default", "true" ) \
+		HTML_HELP_BODY() \
+		"This parameter indicated to show by TreeLayOut." \
+		HTML_HELP_CLOSE(),
+
+		// Map layout
+		HTML_HELP_OPEN() \
+		HTML_HELP_DEF( "type", "boolean" ) \
+		HTML_HELP_DEF( "default", "true" ) \
+		HTML_HELP_BODY() \
+		"This parameter indicated to show by MapLayout ." \
+		HTML_HELP_CLOSE(),
+
 		HTML_HELP_OPEN()
 		HTML_HELP_DEF("type","separator")
 		HTML_HELP_BODY()
@@ -41,6 +58,8 @@ VisualizeFI::VisualizeFI(AlgorithmContext context):ImportModule(context) {
 	// TODO Auto-generated constructor stub
 	addParameter<string>("file::filename",paramHelp[0]);
 	addParameter<StringCollection> ("model", paramHelp[1], "2;1");
+	//addParameter<bool>("tree Layout",paramHelp[4], "false");
+	//addParameter<bool>("map layout",paramHelp[4], "false");
 	addParameter<string>("Separator",paramHelp[2], ";");
 }
 
@@ -154,7 +173,6 @@ void VisualizeFI::readFile(const string &file){
 			else
 			{
 				curNode=nodeNull;   //cursor node
-
 				itemset.sortItems();
 				for(int i=0;i<size-1;i++)
 				{
@@ -203,7 +221,7 @@ bool VisualizeFI::import(const std::string &){
 	if(this->model==1){
 		this->orderItemsets();
 	    this->buildNodes();
-		 this->buildEdges();
+		this->buildEdges();
 	}
 
 	  bool resultBool;  // will store the result of the execution (if true : everything went well, false: something wrong appent)

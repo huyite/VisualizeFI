@@ -108,9 +108,9 @@ void ItemSet::addItems(const vector<Item>& its){
 }
 void swap(Item &it1,Item &it2){
 	Item temp;
-	temp.setName(it1.getName());
-	it1.setName(it2.getName());
-	it2.setName(temp.getName());
+	temp=it1;
+	it1=it2;
+	it2=temp;
 }
 
 void ItemSet::sortItems(){

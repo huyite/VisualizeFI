@@ -29,6 +29,7 @@ public:
 	virtual void getData(Graph **graph,DataSet *dataSet);
     virtual std::list<std::pair<QWidget *,std::string> > getConfigurationWidget();
     void getLeave(const Graph *,vector<node> &);
+    void reBuildTree();
 protected:
     bool checkItemSet(node,vector<node> &,vector<edge>&,const ItemSet&);
 signals:
