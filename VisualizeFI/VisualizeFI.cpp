@@ -229,16 +229,16 @@ bool VisualizeFI::import(const std::string &){
 	  LayoutProperty * layout = graph->getProperty<LayoutProperty>("viewLayout"); // get the viewLayout property of your graph
       SizeProperty * nodeSize = graph->getProperty<SizeProperty>("viewSize"); // same for viewSize
 	  DataSet tmp; // datastructure to store the parameters to send to the plugin
-	  //tmp.set("node size", nodeSize);  // set the node size parameter to nodeSize (that is the viewSize property).
-	  //tmp.set("layer spacing", 10); // spacing between layers
-	  //tmp.set("node spacing", 2); // spacing between nodes of the same layer
-	 // tmp.set("orthogonal", true); // you want an orthogonal drawing
-	 // StringCollection tmpS("vertical;horizontal;"); // datastructure to store strings, here the directionality of the layout
-	 // tmpS.setCurrent("vertical");
-	  //tmp.set("orientation", tmpS);
-	  resultBool = graph->computeProperty("Hierarchical Tree (R-T Extended)", layout,
+	  tmp.set("node size", nodeSize);  // set the node size parameter to nodeSize (that is the viewSize property).
+	  tmp.set("layer spacing", 10); // spacing between layers
+	  tmp.set("node spacing", 2); // spacing between nodes of the same layer
+	  tmp.set("orthogonal", true); // you want an orthogonal drawing
+	  StringCollection tmpS("vertical;horizontal;"); // datastructure to store strings, here the directionality of the layout
+	  tmpS.setCurrent("vertical");
+	  tmp.set("orientation", tmpS);
+	  resultBool = graph->computeProperty("Hierarchical Tree (R-T Extended)", layout,   //"Squarified Tree Map","Hierarchical Graph"
 			                              erreurMsg, 0, &tmp); // call to the plugin.
-	 // assert(resultBool);
+	  assert(resultBool);
 
 	return resultBool;
 }

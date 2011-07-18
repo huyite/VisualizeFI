@@ -8,7 +8,7 @@
 #ifndef VISUALIZEFI_H_
 #define VISUALIZEFI_H_
 
-
+#include <QDialog>
 #include <tulip/TulipPlugin.h>
 #include <tulip/ImportModule.h>
 #include "ItemSet.h"
@@ -16,7 +16,8 @@
 using namespace std;
 using namespace tlp;
 
-class VisualizeFI: public ImportModule {
+class VisualizeFI: public ImportModule{
+
 private:
 	  vector<ItemSet> itemsets;
       vector<node> nodes;
@@ -29,11 +30,12 @@ public:
 	virtual ~VisualizeFI();
 	void buildNodes();
 	void buildEdges();
-    virtual bool import(const string &);
+
     void readFile(const string &file);
     node isNodeSon(const string &,const node &);
     bool isExitItemSet(ItemSet &itemset );
     void orderItemsets();
+    virtual bool import(const string &);
 
 };
 
