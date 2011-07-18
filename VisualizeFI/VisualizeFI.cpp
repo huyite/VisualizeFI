@@ -31,36 +31,30 @@ const char
 		"Please select model 1 or 2."
 		HTML_HELP_CLOSE(),
 
-		// Tree layout
-		HTML_HELP_OPEN() \
-		HTML_HELP_DEF( "type", "boolean" ) \
-		HTML_HELP_DEF( "default", "true" ) \
-		HTML_HELP_BODY() \
-		"This parameter indicated to show by TreeLayOut." \
-		HTML_HELP_CLOSE(),
-
-		// Map layout
-		HTML_HELP_OPEN() \
-		HTML_HELP_DEF( "type", "boolean" ) \
-		HTML_HELP_DEF( "default", "true" ) \
-		HTML_HELP_BODY() \
-		"This parameter indicated to show by MapLayout ." \
-		HTML_HELP_CLOSE(),
-
 		HTML_HELP_OPEN()
 		HTML_HELP_DEF("type","separator")
 		HTML_HELP_BODY()
 		"Please chose a separator"
 		HTML_HELP_CLOSE(),
+		// Tree or Map layout
+		HTML_HELP_OPEN() \
+		HTML_HELP_DEF( "type", "StringCollection" ) \
+		HTML_HELP_DEF("values", "Tree <br> Map")
+		HTML_HELP_DEF( "default", "tree" ) \
+		HTML_HELP_BODY() \
+		"This parameter indicated to show by TreeLayOut." \
+		HTML_HELP_CLOSE(),
+
+
 };
 }
 VisualizeFI::VisualizeFI(AlgorithmContext context):ImportModule(context) {
 	// TODO Auto-generated constructor stub
 	addParameter<string>("file::filename",paramHelp[0]);
 	addParameter<StringCollection> ("model", paramHelp[1], "2;1");
-	//addParameter<bool>("tree Layout",paramHelp[4], "false");
-	//addParameter<bool>("map layout",paramHelp[4], "false");
 	addParameter<string>("Separator",paramHelp[2], ";");
+	addParameter<StringCollection>("Layout",paramHelp[3], "Tree;Map");
+
 }
 
 VisualizeFI::~VisualizeFI() {
@@ -206,17 +200,19 @@ bool VisualizeFI::import(const std::string &){
 	string filename;
 	string sep = ";";
 	StringCollection model;
+	StringCollection implayout;
 	if(dataSet!=0){
 		dataSet->get<string>("file::filename",filename);
 		dataSet->get<string>("Separator",sep);
 		dataSet->get<StringCollection>("model", model);
+		dataSet->get<StringCollection>("Layout",implayout);
 	}
 	this->separator=sep;
-
 	if (model.getCurrentString().compare("1") == 0)
 		this->model = 1;
 	else
 		this->model = 2;
+
 	this->readFile(filename);
 	if(this->model==1){
 		this->orderItemsets();
@@ -224,26 +220,41 @@ bool VisualizeFI::import(const std::string &){
 		this->buildEdges();
 	}
 
-	  bool resultBool;  // will store the result of the execution (if true : everything went well, false: something wrong appent)
-	  string erreurMsg; // if resultBool == false then erreurMsg will contain an error message
+	  bool resultBool;
+	  string erreurMsg;
 	  LayoutProperty * layout = graph->getLocalProperty<LayoutProperty>("viewLayout"); // get the viewLayout property of your graph
       SizeProperty * nodeSize = graph->getLocalProperty<SizeProperty>("viewSize"); // same for viewSize
 	  DataSet tmp; // datastructure to store the parameters to send to the plugin
-	  tmp.set("node size", nodeSize);  // set the node size parameter to nodeSize (that is the viewSize property).
-	  tmp.set("layer spacing", 10); // spacing between layers
-	  tmp.set("node spacing", 2); // spacing between nodes of the same layer
-	  tmp.set("orthogonal", true); // you want an orthogonal drawing
-	  StringCollection tmpS("vertical;horizontal;"); // datastructure to store strings, here the directionality of the layout
-	  tmpS.setCurrent("vertical");
-	  tmp.set("orientation", tmpS);
-	  LayoutProperty tempLayout(graph);
-	  tempLayout = *layout;
-	  resultBool = graph->computeProperty<LayoutProperty>("Hierarchical Tree (R-T Extended)", &tempLayout,   //"Squarified Tree Map","Hierarchical Graph"
-			                              erreurMsg, 0, &tmp); // call to the plugin.
-	  *layout = tempLayout;
-	  /*resultBool = graph->computeProperty<LayoutProperty>("Squarified Tree Map", layout,   //"Squarified Tree Map","Hierarchical Graph"
-	  			                              erreurMsg, 0, &tmp); // call to the plugin.*/
-	  assert(resultBool);
+	  if (implayout.getCurrentString().compare("Tree") == 0)
+	  {
+		      tmp.set("node size", nodeSize);
+		  	  tmp.set("layer spacing", 10);
+		  	  tmp.set("node spacing", 2);
+		  	  tmp.set("orthogonal", true);
+		  	  StringCollection tmpS("vertical;horizontal;");
+		  	  tmp.set("orientation", tmpS);
+		  	  LayoutProperty tempLayout(graph);
+		  	  tempLayout = *layout;
+		  	  resultBool = graph->computeProperty<LayoutProperty>("Hierarchical Tree (R-T Extended)", &tempLayout,   //"Squarified Tree Map","Hierarchical Graph"
+		  			                              erreurMsg, 0, &tmp); // call to the plugin.
+		  	  *layout = tempLayout;
+		  	  assert(resultBool);
+	  }
+	  		else
+	  			{
+	  			      tmp.set("node size", nodeSize);
+	  				  tmp.set("layer spacing", 64);
+	  				  tmp.set("node spacing", 18);
+	  				  StringCollection tmpS("vertical;horizontal;");
+	  				  tmp.set("orientation", tmpS);
+	  				  LayoutProperty tempLayout(graph);
+	  				  tempLayout = *layout;
+	  				  resultBool = graph->computeProperty<LayoutProperty>("Squarified Tree Map", &tempLayout,   //,"Hierarchical Graph"
+	  						                              erreurMsg, 0, &tmp); // call to the plugin.
+	  				  *layout = tempLayout;
+	  				  assert(resultBool);
+	  			}
+
 
 	return resultBool;
 }
