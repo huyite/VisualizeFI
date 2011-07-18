@@ -226,8 +226,8 @@ bool VisualizeFI::import(const std::string &){
 
 	  bool resultBool;  // will store the result of the execution (if true : everything went well, false: something wrong appent)
 	  string erreurMsg; // if resultBool == false then erreurMsg will contain an error message
-	  LayoutProperty * layout = graph->getProperty<LayoutProperty>("viewLayout"); // get the viewLayout property of your graph
-      SizeProperty * nodeSize = graph->getProperty<SizeProperty>("viewSize"); // same for viewSize
+	  LayoutProperty * layout = graph->getLocalProperty<LayoutProperty>("viewLayout"); // get the viewLayout property of your graph
+      SizeProperty * nodeSize = graph->getLocalProperty<SizeProperty>("viewSize"); // same for viewSize
 	  DataSet tmp; // datastructure to store the parameters to send to the plugin
 	  tmp.set("node size", nodeSize);  // set the node size parameter to nodeSize (that is the viewSize property).
 	  tmp.set("layer spacing", 10); // spacing between layers
@@ -236,8 +236,13 @@ bool VisualizeFI::import(const std::string &){
 	  StringCollection tmpS("vertical;horizontal;"); // datastructure to store strings, here the directionality of the layout
 	  tmpS.setCurrent("vertical");
 	  tmp.set("orientation", tmpS);
-	  resultBool = graph->computeProperty("Hierarchical Tree (R-T Extended)", layout,   //"Squarified Tree Map","Hierarchical Graph"
+	  LayoutProperty tempLayout(graph);
+	  tempLayout = *layout;
+	  resultBool = graph->computeProperty<LayoutProperty>("Hierarchical Tree (R-T Extended)", &tempLayout,   //"Squarified Tree Map","Hierarchical Graph"
 			                              erreurMsg, 0, &tmp); // call to the plugin.
+	  *layout = tempLayout;
+	  /*resultBool = graph->computeProperty<LayoutProperty>("Squarified Tree Map", layout,   //"Squarified Tree Map","Hierarchical Graph"
+	  			                              erreurMsg, 0, &tmp); // call to the plugin.*/
 	  assert(resultBool);
 
 	return resultBool;
