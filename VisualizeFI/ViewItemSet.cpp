@@ -160,11 +160,9 @@ node ViewItemSet::isNodeSon(const string & name,const node &curNode){
 }
 void ViewItemSet::reBuildTree(const ItemSet& it){
 	Graph *graph=getGlMainWidget()->getGraph();
-	graph->unholdObservers();
-	//graph->delAllNode();
-	//graph->delEdge();
-	graph->unholdObservers();
-	/*StringProperty *labelItemSet=graph->getLocalProperty<StringProperty>("viewLabel");
+	graph->holdObservers();
+	graph->clear();
+	StringProperty *labelItemSet=graph->getLocalProperty<StringProperty>("viewLabel");
 	DoubleProperty *frequentItemSet=graph->getLocalProperty<DoubleProperty>("viewFrequent");
 	DataSet dataset;
 	vector<ItemSet> data;
@@ -208,6 +206,7 @@ void ViewItemSet::reBuildTree(const ItemSet& it){
 
 				}
 			itemset.clear();
-	}*/
+	}
+	graph->unholdObservers();
 }
 INTERACTORPLUGINVIEWEXTENSION(ViewItemSetNavigation,"ViewItemSetNavigation","InteractorNavigation","ItemSet view","","","Navigation","1")

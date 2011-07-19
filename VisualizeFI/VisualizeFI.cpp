@@ -228,15 +228,21 @@ bool VisualizeFI::import(const std::string &){
 	  string erreurMsg;
 	  LayoutProperty * layout = graph->getLocalProperty<LayoutProperty>("viewLayout"); // get the viewLayout property of your graph
       SizeProperty * nodeSize = graph->getLocalProperty<SizeProperty>("viewSize"); // same for viewSize
-	  DataSet tmp; // datastructure to store the parameters to send to the plugin
+      nodeSize->setAllNodeValue(Size(1,1,1));
+      nodeSize->setAllEdgeValue(Size(1,1,1));
+	  ColorProperty* color=graph->getLocalProperty<ColorProperty>("viewColor");
+      DataSet tmp; // datastructure to store the parameters to send to the plugin
 	  if (implayout.getCurrentString().compare("Tree") == 0)
 	  {
-		      tmp.set("node size", nodeSize);
-		  	  tmp.set("layer spacing", 64);
-		  	  tmp.set("node spacing", 18);
-		  	  tmp.set("orthogonal", true);
+			  StructDef structDef = LayoutProperty::factory->getPluginParameters("Hierarchical Tree (R-T Extended)");
+			  structDef.buildDefaultDataSet(tmp,graph);
+		      //tmp.set("node size", nodeSize);
+		  	  //tmp.set<float>("layer spacing", 64.);
+		  	  //tmp.set<float>("node spacing", 18.);
+		  	  //tmp.set("orthogonal", true);
 		  	  StringCollection tmpS("vertical;horizontal;");
 		  	  tmp.set("orientation", tmpS);
+
 		  	  LayoutProperty tempLayout(graph);
 		  	  tempLayout = *layout;
 		  	  resultBool = graph->computeProperty<LayoutProperty>("Hierarchical Tree (R-T Extended)", &tempLayout,   //"Squarified Tree Map","Hierarchical Graph"
@@ -259,6 +265,14 @@ bool VisualizeFI::import(const std::string &){
 	  				  assert(resultBool);
 	  			}
 
+	  DataSet colorMappingDataset;
+
+	  StructDef def = ColorProperty::factory->getPluginParameters("Color Mapping");
+	  def.buildDefaultDataSet(colorMappingDataset,graph);
+	  colorMappingDataset.set("linear/uniform\nproperty",graph->getLocalProperty<DoubleProperty>("viewFrequent"));
+      if(!graph->computeProperty<ColorProperty>("Color Mapping",color,erreurMsg,0,&colorMappingDataset)){
+    	std::cerr<<__PRETTY_FUNCTION__<<" "<<__LINE__<<std::endl;
+      }
 
 	return resultBool;
 }
