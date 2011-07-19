@@ -10,15 +10,18 @@
 #ifndef ITEMSETVIEWDIALOGYJ8613_H
 #define ITEMSETVIEWDIALOGYJ8613_H
 
+
 #include <QtCore/QVariant>
 #include <QtGui/QAction>
 #include <QtGui/QApplication>
 #include <QtGui/QButtonGroup>
+#include <QtGui/QCheckBox>
 #include <QtGui/QDialog>
 #include <QtGui/QHeaderView>
 #include <QtGui/QLabel>
 #include <QtGui/QLineEdit>
 #include <QtGui/QPushButton>
+
 
 QT_BEGIN_NAMESPACE
 
@@ -31,6 +34,7 @@ public:
     QLabel *label_2;
     QLabel *label_3;
     QLabel *label_4;
+    QCheckBox *checkBox;
 
 
     void setupUi(QDialog *Dialog)
@@ -52,10 +56,13 @@ public:
     	        label_2->setGeometry(QRect(10, 100, 101, 20));
     	        label_3 = new QLabel(Dialog);
     	        label_3->setObjectName(QString::fromUtf8("label_3"));
-    	        label_3->setGeometry(QRect(40, 220, 91, 41));
+    	        label_3->setGeometry(QRect(30, 200, 91, 41));
     	        label_4 = new QLabel(Dialog);
     	        label_4->setObjectName(QString::fromUtf8("label_4"));
     	        label_4->setGeometry(QRect(120, 30, 181, 17));
+    	        checkBox = new QCheckBox(Dialog);
+    	        checkBox->setObjectName(QString::fromUtf8("checkBox"));
+    	        checkBox->setGeometry(QRect(120, 130, 111, 22));
 
     	        retranslateUi(Dialog);
     	       // QObject::connect(pushButton, SIGNAL(clicked()), lineEdit, SLOT(copy()));
@@ -66,12 +73,14 @@ public:
 
     void retranslateUi(QDialog *Dialog)
     {
-            Dialog->setWindowTitle(QApplication::translate("Dialog", "Dialog", 0, QApplication::UnicodeUTF8));
-            label->setText(QString());
-            pushButton->setText(QApplication::translate("Dialog", "OK", 0, QApplication::UnicodeUTF8));
-            label_2->setText(QApplication::translate("Dialog", "Input ItemSet :", 0, QApplication::UnicodeUTF8));
-            label_3->setText(QApplication::translate("Dialog", "Frequency:", 0, QApplication::UnicodeUTF8));
-            label_4->setText(QApplication::translate("Dialog", "Visualize Frequent ItemSet", 0, QApplication::UnicodeUTF8));
+
+        Dialog->setWindowTitle(QApplication::translate("Dialog", "Dialog", 0, QApplication::UnicodeUTF8));
+        label->setText(QString());
+        pushButton->setText(QApplication::translate("Dialog", "OK", 0, QApplication::UnicodeUTF8));
+        label_2->setText(QApplication::translate("Dialog", "Input ItemSet :", 0, QApplication::UnicodeUTF8));
+        label_3->setText(QApplication::translate("Dialog", "Frequency:", 0, QApplication::UnicodeUTF8));
+        label_4->setText(QApplication::translate("Dialog", "Visualize Frequent ItemSet", 0, QApplication::UnicodeUTF8));
+        checkBox->setText(QApplication::translate("Dialog", "Rebuild Tree", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

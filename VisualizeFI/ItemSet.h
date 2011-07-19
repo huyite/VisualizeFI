@@ -28,7 +28,7 @@ public:
 	bool isEqual(ItemSet &it);
 	int numberOfItem()const;
 	Item getItem(int) const;
-    bool isExitItem(Item);
+    bool isExitItem(Item)const;
     string getName()const;
     double getFrequency() const;
     void IncrFrequency(double);

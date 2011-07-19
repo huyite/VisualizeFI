@@ -19,7 +19,7 @@ protected:
 private:
     Ui::ItemSetViewDialog *ui;
 signals:
-    void itemsetChange(const ItemSet &);
+    void itemsetChange(const ItemSet &,bool);
 public slots:
    void viewitemset();
    void updateFrItemSet(double);

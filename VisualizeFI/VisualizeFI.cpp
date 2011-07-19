@@ -141,9 +141,12 @@ void VisualizeFI::readFile(const string &file){
 	frequentItemSet->setNodeValue(nodeNull,0);
 	int curLineNb = 0;
 	ItemSet itemset;
+	vector<ItemSet> data;
+	DataSet dataset;
 	while(getline(ifile,line)){
 		++curLineNb;
 		itemset.addItems(line,";");
+		data.push_back(itemset);
 		int size=itemset.numberOfItem();
 		double fr= atof(itemset.getItem(size-1).getName().c_str());
 		itemset.removeItem(size);
@@ -194,6 +197,7 @@ void VisualizeFI::readFile(const string &file){
 		pluginProgress->setComment(msg+s2.str()+endmsg);
 		pluginProgress->progress(curLineNb, nbLines);
 	}
+	dataset.set("ItemSet datastructure",data);
 }
 
 bool VisualizeFI::import(const std::string &){
@@ -228,8 +232,8 @@ bool VisualizeFI::import(const std::string &){
 	  if (implayout.getCurrentString().compare("Tree") == 0)
 	  {
 		      tmp.set("node size", nodeSize);
-		  	  tmp.set("layer spacing", 10);
-		  	  tmp.set("node spacing", 2);
+		  	  tmp.set("layer spacing", 64);
+		  	  tmp.set("node spacing", 18);
 		  	  tmp.set("orthogonal", true);
 		  	  StringCollection tmpS("vertical;horizontal;");
 		  	  tmp.set("orientation", tmpS);

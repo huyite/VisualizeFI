@@ -34,7 +34,7 @@ void ItemSetViewDialog::viewitemset(){
 	ItemSet itemset;
 	itemset.addItems(its.toStdString(),";");
 	itemset.sortItems();
-    emit itemsetChange(itemset);
+    emit itemsetChange(itemset,this->ui->checkBox->checkState()==Qt::Checked);
 }
 void ItemSetViewDialog::updateFrItemSet(double fr){
     QVariant temp(fr);

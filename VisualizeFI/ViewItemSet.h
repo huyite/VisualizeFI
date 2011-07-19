@@ -29,7 +29,8 @@ public:
 	virtual void getData(Graph **graph,DataSet *dataSet);
     virtual std::list<std::pair<QWidget *,std::string> > getConfigurationWidget();
     void getLeave(const Graph *,vector<node> &);
-    void reBuildTree();
+    void reBuildTree(const ItemSet&);
+    node isNodeSon(const string &,const node &);
 protected:
     bool checkItemSet(node,vector<node> &,vector<edge>&,const ItemSet&);
 signals:
@@ -39,7 +40,7 @@ public slots:
     virtual void refresh();
     virtual void init();
     void setGraph(Graph *graph);
-    void findItemSet(const ItemSet& i);
+    void findItemSet(const ItemSet& i,bool);
 
 };
 

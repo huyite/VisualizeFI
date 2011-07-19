@@ -38,7 +38,7 @@ bool ItemSet::isEqual(ItemSet &it){
     			return false;
 	return true;
 }
-bool ItemSet::isExitItem(Item it){
+bool ItemSet::isExitItem(Item it) const{
 	const char *st1;
     const char *st2;
 	for(int i=0;i<this->numberOfItem();i++){
