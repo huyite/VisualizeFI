@@ -27,7 +27,7 @@ public:
 	bool checkSubSet(ItemSet &it);
 	bool isEqual(ItemSet &it);
 	int numberOfItem()const;
-	Item getItem(int) const;
+	Item * getItem(int) ;
     bool isExitItem(Item)const;
     string getName()const;
     double getFrequency() const;

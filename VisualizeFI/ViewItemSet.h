@@ -20,6 +20,7 @@ Q_OBJECT;
 protected:
      ItemSetViewDialog *itemsetviewdialog;
      vector<node> leave;
+     vector<ItemSet> data;
     //
 public:
 	ViewItemSet();
@@ -32,7 +33,7 @@ public:
     void reBuildTree(const ItemSet&);
     node isNodeSon(const string &,const node &);
 protected:
-    bool checkItemSet(node,vector<node> &,vector<edge>&,const ItemSet&);
+    bool checkItemSet(node,vector<node> &,vector<edge>&,ItemSet&);
 signals:
     void freqItemSet(double );
 public slots:
@@ -40,7 +41,7 @@ public slots:
     virtual void refresh();
     virtual void init();
     void setGraph(Graph *graph);
-    void findItemSet(const ItemSet& i,bool);
+    void findItemSet( ItemSet& i,bool);
 
 };
 

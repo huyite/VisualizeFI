@@ -32,13 +32,13 @@ void Item::setPriority(bool b){
 }
 
 bool Item::operator > (const Item& it )const{
-return (this->priority==it.priority)?strcmp(this->getName().c_str(),it.getName().c_str())>0:this->priority;
+return (this->priority==it.priority)?strcmp(this->getName().c_str(),it.getName().c_str())>0:(this->priority==true)?false:true;
 
 }
 bool Item::operator ==(const Item& it)const{
-	return (this->priority==it.priority)?strcmp(this->getName().c_str(),it.getName().c_str())==0:this->priority;
+	return strcmp(this->getName().c_str(),it.getName().c_str())==0;
 
 }
 bool Item::operator <(const Item& it)const{
-	return (this->priority==it.priority)?strcmp(this->getName().c_str(),it.getName().c_str())<0:this->priority;
+	return (this->priority==it.priority)?strcmp(this->getName().c_str(),it.getName().c_str())<0:(this->priority);
 }

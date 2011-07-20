@@ -10,6 +10,7 @@
 #include <fstream>
 #include <tulip/StringProperty.h>
 #include <tulip/TulipPlugin.h>
+#include <math.h>
 using namespace std;
 using namespace tlp;
 
@@ -104,7 +105,7 @@ ItemSet createItemset(char* vars,ItemSet arrItem,int frequency){
     ItemSet itemset;
   	for(int i=0;i<arrItem.numberOfItem();i++)
          if(vars[i]=='1')
-        	itemset.addItem(arrItem.getItem(i));
+        	itemset.addItem(*(arrItem.getItem(i)));
 
   	 itemset.IncrFrequency(frequency);
     return itemset;
@@ -121,6 +122,7 @@ bool VisualizeFI::isExitItemSet(ItemSet &itemset ){
 void VisualizeFI::readFile(const string &file){
 	StringProperty *labelItemSet=graph->getLocalProperty<StringProperty>("viewLabel");
 	DoubleProperty *frequentItemSet=graph->getLocalProperty<DoubleProperty>("viewFrequent");
+	DoubleProperty* LogFrequency=graph->getLocalProperty<DoubleProperty>("viewLogFrequency");
 	ifstream ifile1(file.c_str(),ifstream::in);
 	string line1;
 	int nbLines = 0;
@@ -142,13 +144,13 @@ void VisualizeFI::readFile(const string &file){
 	int curLineNb = 0;
 	ItemSet itemset;
 	vector<ItemSet> data;
-	DataSet dataset;
+
 	while(getline(ifile,line)){
 		++curLineNb;
 		itemset.addItems(line,";");
 		data.push_back(itemset);
 		int size=itemset.numberOfItem();
-		double fr= atof(itemset.getItem(size-1).getName().c_str());
+		double fr= atof(itemset.getItem(size-1)->getName().c_str());
 		itemset.removeItem(size);
 		if(size!=0)
 			if(this->model==1)
@@ -173,18 +175,20 @@ void VisualizeFI::readFile(const string &file){
 				itemset.sortItems();
 				for(int i=0;i<size-1;i++)
 				{
-					pointerSon=isNodeSon(itemset.getItem(i).getName(),curNode);
+					pointerSon=isNodeSon(itemset.getItem(i)->getName(),curNode);
 					if(!pointerSon.isValid()){
 						node n= node();
 						n=graph->addNode();
-						labelItemSet->setNodeStringValue(n,itemset.getItem(i).getName());
+						labelItemSet->setNodeStringValue(n,itemset.getItem(i)->getName());
 						frequentItemSet->setNodeValue(n,fr);
+						LogFrequency->setNodeValue(n,log(fr));
 						edge e=graph->addEdge(curNode,n);
 						curNode=n;
 
 					}else{
 						curNode= pointerSon;
 						frequentItemSet->setNodeValue(curNode,frequentItemSet->getNodeValue(curNode)+fr);
+						LogFrequency->setNodeValue(curNode,log(frequentItemSet->getNodeValue(curNode)+fr));
 
 					}
 				}
@@ -197,7 +201,10 @@ void VisualizeFI::readFile(const string &file){
 		pluginProgress->setComment(msg+s2.str()+endmsg);
 		pluginProgress->progress(curLineNb, nbLines);
 	}
-	dataset.set("ItemSet datastructure",data);
+	//dataSet->set<vector<ItemSet> >("ItemSet",data);
+	DataSet datai;
+	datai.set<vector<ItemSet> >("ItemSet",data);
+	graph->setAttribute("datasetitem",datai);
 }
 
 bool VisualizeFI::import(const std::string &){
@@ -236,9 +243,9 @@ bool VisualizeFI::import(const std::string &){
 	  {
 			  StructDef structDef = LayoutProperty::factory->getPluginParameters("Hierarchical Tree (R-T Extended)");
 			  structDef.buildDefaultDataSet(tmp,graph);
-		      //tmp.set("node size", nodeSize);
-		  	  //tmp.set<float>("layer spacing", 64.);
-		  	  //tmp.set<float>("node spacing", 18.);
+		     // tmp.set<float>("node size", nodeSize);
+		  	 // tmp.set<float>("layer spacing", 200.);
+		  	 // tmp.set<float>("node spacing", 20.);
 		  	  //tmp.set("orthogonal", true);
 		  	  StringCollection tmpS("vertical;horizontal;");
 		  	  tmp.set("orientation", tmpS);
@@ -269,8 +276,9 @@ bool VisualizeFI::import(const std::string &){
 
 	  StructDef def = ColorProperty::factory->getPluginParameters("Color Mapping");
 	  def.buildDefaultDataSet(colorMappingDataset,graph);
-	  colorMappingDataset.set("linear/uniform\nproperty",graph->getLocalProperty<DoubleProperty>("viewFrequent"));
-      if(!graph->computeProperty<ColorProperty>("Color Mapping",color,erreurMsg,0,&colorMappingDataset)){
+
+	  colorMappingDataset.set("linear/uniform\nproperty",graph->getLocalProperty<DoubleProperty>("viewLogFrequency"));
+	  if(!graph->computeProperty<ColorProperty>("Color Mapping",color,erreurMsg,0,&colorMappingDataset)){
     	std::cerr<<__PRETTY_FUNCTION__<<" "<<__LINE__<<std::endl;
       }
 

@@ -24,7 +24,7 @@ void ItemSet::removeItem(int index){
 }
 bool ItemSet::checkSubSet(ItemSet &it){
 	for(int i=0;i<it.numberOfItem();i++)
-		if(!this->isExitItem(it.getItem(i)))
+		if(!this->isExitItem(*(it.getItem(i))))
 			return false;
 	return true;
 }
@@ -34,7 +34,7 @@ bool ItemSet::isEqual(ItemSet &it){
     if(this->numberOfItem()!=it.numberOfItem())
     	return false;
 	for(int i=0;i<(it.numberOfItem());i++)
-    	if(!this->isExitItem(it.getItem(i)))
+    	if(!this->isExitItem(*(it.getItem(i))))
     			return false;
 	return true;
 }
@@ -43,24 +43,24 @@ bool ItemSet::isExitItem(Item it) const{
     const char *st2;
 	for(int i=0;i<this->numberOfItem();i++){
 		st1=it.getName().c_str();
-		st2=this->getItem(i).getName().c_str();
+		st2=this->items[i].getName().c_str();
 		if( strcmp (st1,st2)==0)
 					return true;
 	}
 
 		return false;
 }
-Item ItemSet::getItem(int index)const{
-	return items[index];
+Item *ItemSet::getItem(int index){
+	return &items[index];
 }
 int ItemSet::numberOfItem()const{
 	return this->items.size();
 }
 string ItemSet::getName() const{
-	string s=this->getItem(0).getName();
+	string s=this->items[0].getName();
 	if(this->numberOfItem()>1)
 	for(int i=1;i<this->numberOfItem();i++)
-		s+=";"+this->getItem(i).getName();
+		s+=";"+this->items[i].getName();
 	return s;
 }
 double ItemSet::getFrequency()const{

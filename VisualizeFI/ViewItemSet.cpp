@@ -34,7 +34,7 @@ ViewItemSet::~ViewItemSet() {
 QWidget *ViewItemSet::construct(QWidget* parent){
 	QWidget *widget=GlMainView::construct(parent);
 	itemsetviewdialog=new ItemSetViewDialog();
-	QObject::connect(itemsetviewdialog,SIGNAL(itemsetChange(const ItemSet&,bool)),this,SLOT(findItemSet(const ItemSet&,bool)));
+	QObject::connect(itemsetviewdialog,SIGNAL(itemsetChange(ItemSet&,bool)),this,SLOT(findItemSet(ItemSet&,bool)));
 	QObject::connect(this,SIGNAL(freqItemSet(double )),itemsetviewdialog,SLOT(updateFrItemSet(double )));
 	return widget;
 }
@@ -43,6 +43,7 @@ void ViewItemSet::setData(Graph *graph,DataSet dataSet){
 	if(dataSet.exist("glMainWidgetData"))
 	dataSet.get("glMainWidgetData",data);
 	getGlMainWidget()->setData(graph,data);
+	dataSet.get<vector<ItemSet> >("ItemSet",this->data);
 
 }
 void ViewItemSet::getData(Graph **graph, DataSet *dataSet){
@@ -68,7 +69,7 @@ void ViewItemSet::setGraph(Graph *graph){
 	//mainWidget->setGraph(graph);
 	//this->draw();
 }
-bool ViewItemSet::checkItemSet(node nodeleaf,vector<node> &nodeitemset,vector<edge> &path,const ItemSet& its){
+bool ViewItemSet::checkItemSet(node nodeleaf,vector<node> &nodeitemset,vector<edge> &path,ItemSet& its){
 	Graph *graph=getGlMainWidget()->getGraph();
 	StringProperty *name =graph->getLocalProperty<StringProperty>("viewLabel");
 	string leaf=name->getNodeStringValue(nodeleaf);
@@ -76,10 +77,10 @@ bool ViewItemSet::checkItemSet(node nodeleaf,vector<node> &nodeitemset,vector<ed
 	node cursor=nodeleaf;
 	for(int j=its.numberOfItem()-1;j>-1;j--){
 		      while(!graph->indeg(cursor)==0){
-		    	  if(*itemleaf<its.getItem(j))
+		    	  if((*its.getItem(j))>*itemleaf)
 		    	 	       return false;
 
-		    	  if(*(itemleaf)==its.getItem(j)){
+		    	  if(*(itemleaf)==(*(its.getItem(j)))){
 		    		  nodeitemset.push_back(cursor);
 		    		  cursor=graph->getInNode(cursor,1);
 		    		  leaf=name->getNodeStringValue(cursor);
@@ -105,7 +106,7 @@ bool ViewItemSet::checkItemSet(node nodeleaf,vector<node> &nodeitemset,vector<ed
 		return true;
 	else return false;
 }
-void ViewItemSet::findItemSet(const ItemSet &its,bool reb){
+void ViewItemSet::findItemSet(ItemSet &its,bool reb){
 	if(reb)
 		this->reBuildTree(its);
 	getLeave(getGlMainWidget()->getGraph(),leave);
@@ -160,38 +161,42 @@ node ViewItemSet::isNodeSon(const string & name,const node &curNode){
 }
 void ViewItemSet::reBuildTree(const ItemSet& it){
 	Graph *graph=getGlMainWidget()->getGraph();
+	vector<ItemSet> data;
+	DataSet dataset;
+	bool b=graph->getAttribute("datasetitem",dataset);
+	bool c=dataset.get("ItemSet",data);
 	graph->holdObservers();
 	graph->clear();
 	StringProperty *labelItemSet=graph->getLocalProperty<StringProperty>("viewLabel");
 	DoubleProperty *frequentItemSet=graph->getLocalProperty<DoubleProperty>("viewFrequent");
-	DataSet dataset;
-	vector<ItemSet> data;
-	ItemSet itemset;
+	//ItemSet itemset;
 	node nodeNull=graph->addNode();
 	node curNode;
 	node pointerSon;
 	labelItemSet->setNodeValue(nodeNull,"NULL");
 	frequentItemSet->setNodeValue(nodeNull,0);
-	dataset.get("ItemSet datastructure", data);
-	for(int i=0;i<data.size();i++){
-		    itemset=data[i];
+	int x=data.size();
+	for(int i=0;i<x;i++){
+		ItemSet &itemset=data[i];
 			int size=itemset.numberOfItem();
-			double fr= atof(itemset.getItem(size-1).getName().c_str());
+			double fr= atof(itemset.getItem(size-1)->getName().c_str());
 			itemset.removeItem(size);
 			if(size!=0){
 					curNode=nodeNull;   //cursor node
-					for(int i=0;i<size-1;i++)
-						if(it.isExitItem(itemset.getItem(i)))
-							itemset.getItem(i).setPriority(true);
+
+                    for(int i=0;i<size-1;i++)
+						if(it.isExitItem(*itemset.getItem(i)))
+							itemset.getItem(i)->setPriority(true);
 
 					itemset.sortItems();
+
 					for(int i=0;i<size-1;i++)
 					{
-						pointerSon=isNodeSon(itemset.getItem(i).getName(),curNode);
+						pointerSon=isNodeSon(itemset.getItem(i)->getName(),curNode);
 						if(!pointerSon.isValid()){
 							node n= node();
 							n=graph->addNode();
-							labelItemSet->setNodeStringValue(n,itemset.getItem(i).getName());
+							labelItemSet->setNodeStringValue(n,itemset.getItem(i)->getName());
 							frequentItemSet->setNodeValue(n,fr);
 							edge e=graph->addEdge(curNode,n);
 							curNode=n;
@@ -206,7 +211,25 @@ void ViewItemSet::reBuildTree(const ItemSet& it){
 
 				}
 			itemset.clear();
+
 	}
+	  string erreurMsg;
+	 DataSet tmp;
+				 LayoutProperty * layout = graph->getLocalProperty<LayoutProperty>("viewLayout"); // get the viewLayout property of your graph
+				StructDef structDef = LayoutProperty::factory->getPluginParameters("Hierarchical Tree (R-T Extended)");
+							  structDef.buildDefaultDataSet(tmp,graph);
+						     // tmp.set<float>("node size", nodeSize);
+						  	 // tmp.set<float>("layer spacing", 200.);
+						  	 // tmp.set<float>("node spacing", 20.);
+						  	  //tmp.set("orthogonal", true);
+						  	  StringCollection tmpS("vertical;horizontal;");
+						  	  tmp.set("orientation", tmpS);
+
+						  	  LayoutProperty tempLayout(graph);
+						  	  tempLayout = *layout;
+						  	  graph->computeProperty<LayoutProperty>("Hierarchical Tree (R-T Extended)", &tempLayout,   //"Squarified Tree Map","Hierarchical Graph"
+						  			                              erreurMsg, 0, &tmp); // call to the plugin.
+						  	  *layout = tempLayout;
 	graph->unholdObservers();
 }
 INTERACTORPLUGINVIEWEXTENSION(ViewItemSetNavigation,"ViewItemSetNavigation","InteractorNavigation","ItemSet view","","","Navigation","1")
